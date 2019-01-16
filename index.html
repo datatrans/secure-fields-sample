@@ -57,8 +57,14 @@
     secureFields.initTokenize(
       '1100007006',
       {
-        cardNumber: 'card-number',
-        cvv: 'cvv-number'
+        cardNumber: {
+           placeholderElementId: 'card-number',
+           inputType: 'tel'
+        },
+        cvv:  {
+           placeholderElementId: 'cvv-number',
+           inputType: 'tel'
+        }
       },
       {
         // options...
