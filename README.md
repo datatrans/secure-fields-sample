@@ -7,4 +7,5 @@ Further information can be found in the [PCI Proxy Documentation](https://docs.p
 
 ## Usage
 
-Simply open `index.html` in a browser.
+Visit the [online demo](https://datatrans.github.io/secure-fields-sample/) or clone this repository
+and open `index.html` in a browser.
