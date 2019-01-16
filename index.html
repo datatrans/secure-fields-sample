@@ -66,17 +66,29 @@
     );
 
     secureFields.on('ready', function () {
-      // Set these style manually, because they're inside an iframe out of your control
-      secureFields.setStyle('cardNumber', 'font-size: 100%;');
-      secureFields.setStyle('cvv','font-size: 100%;');
+      // Set styles manually as they're inside an iframe and out of the scope of the parent's stylesheets
+      secureFields.setStyle('cardNumber', 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0');
+      secureFields.setStyle('cvv','font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0');
       secureFields.focus('cardNumber');
+    });
+
+    var cardContainer = document.getElementById('card-number-container');
+    var cvvContainer = document.getElementById('cvv-container');
+
+    // Set focus to input fields when clicking containers
+    cardContainer.addEventListener('click', function () {
+      secureFields.focus('cardNumber');
+    });
+    cvvContainer.addEventListener('click', function () {
+      secureFields.focus('cvv');
     });
 
     // Set class names when fields change
     secureFields.on('change', function (data) {
-      var cardContainer = document.getElementById('card-number-container');
-      var cardImage = document.querySelector('#card-number-container .secure-field--card-icon__recognized-card');
+      var cardImage = cardContainer.querySelector('.secure-field--card-icon__recognized-card');
       cardContainer.classList.remove('secure-field__has-error');
+      cvvContainer.classList.remove('secure-field__has-error');
+
       if (!data.fields.cardNumber.paymentMethod) {
         cardImage.src = 'assets/img/card-empty.svg';
         cardContainer.classList.remove('secure-field__is-recognized');
@@ -84,14 +96,10 @@
         cardImage.src = 'assets/img/brands/' + data.fields.cardNumber.paymentMethod + '.svg';
         cardContainer.classList.add('secure-field__is-recognized');
       }
-
-      var cvvContainer = document.getElementById('cvv-container');
-      cvvContainer.classList.remove('secure-field__has-error');
     })
 
     // Set class names on validate
     secureFields.on('validate', function (data) {
-      var cardContainer = document.getElementById('card-number-container');
       if (data.fields.cardNumber.valid) {
         cardContainer.classList.remove('secure-field__has-error');
       } else {
@@ -99,7 +107,6 @@
         cardContainer.classList.add('secure-field__has-error');
       }
 
-      var cvvContainer = document.getElementById('cvv-container');
       if (data.fields.cvv.valid) {
         cvvContainer.classList.remove('secure-field__has-error');
       } else {
