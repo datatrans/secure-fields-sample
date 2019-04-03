@@ -23,6 +23,7 @@ class SecureField extends Component {
 
 SecureField.propTypes = {
   fieldType: PropTypes.string,
+  label: PropTypes.string,
   customClass: PropTypes.string,
   callback: PropTypes.func,
   children: PropTypes.array
