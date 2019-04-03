@@ -1,16 +1,16 @@
 const path = require('path')
 
-const nodeExternals = require('webpack-node-externals')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  target: 'node',
-  externals: [nodeExternals()],
   module: {
     rules: [{
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader'],
+    },{
       test: /\.js$/,
       loader: 'babel-loader',
-      include: [path.resolve(__dirname, './src'), path.resolve(__dirname, '../src')]
+      exclude: /node_modules/
     }]
   },
   entry: {
