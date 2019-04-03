@@ -18,4 +18,5 @@ Go to the React example folder
 Install all dependencies
 
 ### `npm start`
-A working bundle will be created and the generated site directly opens in your browser
+A working bundle will be created
+Open the new lib/app.html in your browser
