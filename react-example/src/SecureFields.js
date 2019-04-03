@@ -22,21 +22,6 @@ const initalCssClass = {
   'secure-field__is-recognized': false
 }
 
-const config = {
-  merchantID: '1100007006',
-  fields:{
-    cardNumber: {
-      placeholderElementId: 'card-number',
-      inputType: 'tel'
-    },
-    cvv: {
-      placeholderElementId: 'cvv-number',
-      inputType: 'tel'
-    }
-  },
-  options: {}
-}
-
 class SecureFields extends Component {
   constructor() {
     super()
@@ -101,6 +86,7 @@ class SecureFields extends Component {
   }
 
   initSecureFields = () => {
+    const { config } = this.props
     this.secureFields = new window.SecureFields()
     this.secureFields.initTokenize(config.merchantID, config.fields, config.options)
     this.bindSecureFieldsEvents()
@@ -183,10 +169,12 @@ class SecureFields extends Component {
 
 SecureFields.propTypes = {
   production: PropTypes.bool,
+  config: PropTypes.object
 }
 
 SecureFields.defaultProps = {
-  production: false
+  production: false,
+  config: {}
 }
 
 export default SecureFields
