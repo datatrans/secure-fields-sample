@@ -23,6 +23,7 @@
   ],
   "devDependencies": {
     "@babel/preset-es2015": "^7.0.0-beta.53",
+    "babel": "^6.23.0",
     "babel-loader": "^8.0.5",
     "babel-preset-2017": "*",
     "babel-preset-env": "*",
