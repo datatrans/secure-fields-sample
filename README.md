@@ -9,3 +9,8 @@ Further information can be found in the [PCI Proxy Documentation](https://docs.p
 
 Visit the [online demo](https://datatrans.github.io/secure-fields-sample/) or clone this repository
 and open `index.html` in a browser.
+
+## Example using React
+
+An example of how to implement this behaviour in modern web applications can be found in the
+[react-example](react-example/) folder.
