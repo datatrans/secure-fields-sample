@@ -5,7 +5,9 @@ class SecureFieldIcon extends Component {
   render() {
     const { fieldType, iconType } = this.props
 
-    return <img alt={fieldType + '-' + iconType} className={'secure-field--card-icon secure-field--card-icon-' + iconType} src={'../../../assets/img/' + iconType + '.svg'} />
+    return <img alt={fieldType + '-' + iconType}
+      className={'secure-field--card-icon secure-field--card-icon-' + iconType}
+      src={'../../../assets/img/' + iconType + '.svg'} />
   }
 }
 
