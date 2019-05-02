@@ -41,26 +41,10 @@
   -webkit-transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease, opacity 200ms ease, -webkit-transform 200ms ease;
 }
 
-.secure-field.secure-field__base.secure-field__input .secure-field--input::-moz-placeholder {
-  transition: color 200ms ease;
-  -webkit-transition: color 200ms ease;
-}
-
-.secure-field.secure-field__base.secure-field__input .secure-field--input:-ms-input-placeholder {
-  transition: color 200ms ease;
-  -webkit-transition: color 200ms ease;
-}
-
-.secure-field.secure-field__base.secure-field__input .secure-field--input::-webkit-input-placeholder {
-  transition: color 200ms ease;
-  -webkit-transition: color 200ms ease;
-}
-
-.secure-field.secure-field__base.secure-field__input .secure-field--input::-ms-input-placeholder {
-  transition: color 200ms ease;
-  -webkit-transition: color 200ms ease;
-}
-
+.secure-field.secure-field__base.secure-field__input .secure-field--input::-moz-placeholder,
+.secure-field.secure-field__base.secure-field__input .secure-field--input:-ms-input-placeholder,
+.secure-field.secure-field__base.secure-field__input .secure-field--input::-webkit-input-placeholder,
+.secure-field.secure-field__base.secure-field__input .secure-field--input::-ms-input-placeholder,
 .secure-field.secure-field__base.secure-field__input .secure-field--input::placeholder {
   transition: color 200ms ease;
   -webkit-transition: color 200ms ease;
@@ -72,22 +56,10 @@
   border-color: #c6c6cb;
 }
 
-.secure-field.secure-field__base.secure-field__input .secure-field--input::-moz-placeholder {
-  color: #c6c6cb;
-}
-
-.secure-field.secure-field__base.secure-field__input .secure-field--input:-ms-input-placeholder {
-  color: #c6c6cb;
-}
-
-.secure-field.secure-field__base.secure-field__input .secure-field--input::-webkit-input-placeholder {
-  color: #c6c6cb;
-}
-
-.secure-field.secure-field__base.secure-field__input .secure-field--input::-ms-input-placeholder {
-  color: #c6c6cb;
-}
-
+.secure-field.secure-field__base.secure-field__input .secure-field--input::-moz-placeholder,
+.secure-field.secure-field__base.secure-field__input .secure-field--input:-ms-input-placeholder,
+.secure-field.secure-field__base.secure-field__input .secure-field--input::-webkit-input-placeholder,
+.secure-field.secure-field__base.secure-field__input .secure-field--input::-ms-input-placeholder,
 .secure-field.secure-field__base.secure-field__input .secure-field--input::placeholder {
   color: #c6c6cb;
 }
@@ -108,31 +80,16 @@
 }
 
 .secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input::-moz-selection,
-.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input ::-moz-selection {
-  background-color: transparent;
-}
-
+.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input ::-moz-selection,
 .secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input::selection,
 .secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input ::selection {
   background-color: transparent;
 }
 
-.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input::-moz-placeholder {
-  color: transparent;
-}
-
-.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input:-ms-input-placeholder {
-  color: transparent;
-}
-
-.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input::-webkit-input-placeholder {
-  color: transparent;
-}
-
-.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input::-ms-input-placeholder {
-  color: transparent;
-}
-
+.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input::-moz-placeholder,
+.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input:-ms-input-placeholder,
+.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input::-webkit-input-placeholder,
+.secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input::-ms-input-placeholder,
 .secure-field.secure-field__base.secure-field__input.secure-field__is-disabled.secure-field .secure-field--input::placeholder {
   color: transparent;
 }
@@ -223,58 +180,22 @@
   z-index: 4;
 }
 
-.secure-field.secure-field__base.secure-field__has-card-icon .secure-field--card-icon.secure-field--card-icon__empty {
-  opacity: 1;
-  visibility: inherit;
-  transition: visibility 0ms linear 0ms, opacity 200ms ease 0ms;
-  -webkit-transition: visibility 0ms linear 0ms, opacity 200ms ease 0ms;
-}
-
-.secure-field.secure-field__base.secure-field__has-card-icon .secure-field--card-icon.secure-field--card-icon__error {
-  opacity: 0;
-  visibility: hidden;
-  transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-  -webkit-transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-}
-
-.secure-field.secure-field__base.secure-field__has-card-icon .secure-field--card-icon.secure-field--card-icon__recognized-card {
-  opacity: 0;
-  visibility: hidden;
-  transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-  -webkit-transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-}
-
-.secure-field.secure-field__base.secure-field__has-card-icon.secure-field__has-error.secure-field .secure-field--card-icon.secure-field--card-icon__empty {
-  opacity: 0;
-  visibility: hidden;
-  transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-  -webkit-transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-}
-
-.secure-field.secure-field__base.secure-field__has-card-icon.secure-field__has-error.secure-field .secure-field--card-icon.secure-field--card-icon__error {
-  opacity: 1;
-  visibility: inherit;
-  transition: visibility 0ms linear 0ms, opacity 200ms ease 0ms;
-  -webkit-transition: visibility 0ms linear 0ms, opacity 200ms ease 0ms;
-}
-
-.secure-field.secure-field__base.secure-field__has-card-icon.secure-field__is-recognized .secure-field--card-icon.secure-field--card-icon__empty {
-  opacity: 0;
-  visibility: hidden;
-  transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-  -webkit-transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-}
-
-.secure-field.secure-field__base.secure-field__has-card-icon.secure-field__is-recognized .secure-field--card-icon.secure-field--card-icon__error {
-  opacity: 0;
-  visibility: hidden;
-  transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-  -webkit-transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
-}
-
+.secure-field.secure-field__base.secure-field__has-card-icon .secure-field--card-icon.secure-field--card-icon__empty,
+.secure-field.secure-field__base.secure-field__has-card-icon.secure-field__has-error.secure-field .secure-field--card-icon.secure-field--card-icon__error,
 .secure-field.secure-field__base.secure-field__has-card-icon.secure-field__is-recognized .secure-field--card-icon.secure-field--card-icon__recognized-card {
   opacity: 1;
   visibility: inherit;
   transition: visibility 0ms linear 0ms, opacity 200ms ease 0ms;
   -webkit-transition: visibility 0ms linear 0ms, opacity 200ms ease 0ms;
+}
+
+.secure-field.secure-field__base.secure-field__has-card-icon .secure-field--card-icon.secure-field--card-icon__error,
+.secure-field.secure-field__base.secure-field__has-card-icon .secure-field--card-icon.secure-field--card-icon__recognized-card,
+.secure-field.secure-field__base.secure-field__has-card-icon.secure-field__has-error.secure-field .secure-field--card-icon.secure-field--card-icon__empty,
+.secure-field.secure-field__base.secure-field__has-card-icon.secure-field__is-recognized .secure-field--card-icon.secure-field--card-icon__empty,
+.secure-field.secure-field__base.secure-field__has-card-icon.secure-field__is-recognized .secure-field--card-icon.secure-field--card-icon__error {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
+  -webkit-transition: visibility 0ms linear 200ms, opacity 200ms ease 0ms;
 }
