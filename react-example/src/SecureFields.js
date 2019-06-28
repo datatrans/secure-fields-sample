@@ -28,7 +28,7 @@ class SecureFields extends Component {
     this.state = {
       message: null,
       cardIcon: 'card-empty',
-      cvvIcon: 'card-empty',
+      cvvIcon: 'cvc-empty',
       cardContainerClassNames: initalCssClass,
       cvvContainerClassNames: initalCssClass
     }
@@ -118,7 +118,7 @@ class SecureFields extends Component {
           'secure-field__has-error': false
         },
         cardIcon: paymentMethod ? ('brands/'+ paymentMethod) : 'card-empty',
-        cvvIcon: 'card-empty'
+        cvvIcon: 'cvc-empty'
       }))
     })
 
@@ -141,7 +141,7 @@ class SecureFields extends Component {
             ...prevState.cvvContainerClassNames,
             'secure-field__has-error': true
           },
-          cvvIcon: 'card-error'
+          cvvIcon: 'cvc-error'
         }))
       }
     })
