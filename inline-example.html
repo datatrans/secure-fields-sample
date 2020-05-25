@@ -51,8 +51,12 @@
   <script>
     // Expiry date
     function setInputFilter(textbox, inputFilter) {
-      ['input', 'keydown', 'keyup', 'mousedown', 'mouseup', 'select', 'contextmenu', 'drop'].forEach(function (e) {
-        textbox.addEventListener(e, function () {
+      ['input', 'keydown', 'keyup', 'mousedown', 'mouseup', 'select', 'contextmenu', 'drop'].forEach(function (key) {
+        textbox.addEventListener(key, function (e) {
+          if (/^\d+$/.test(e.key)) {
+            this.value = formatExpriy(this.value);
+          }
+
           if (inputFilter(this.value)) {
             this.oldValue = this.value;
             this.oldSelectionStart = this.selectionStart;
@@ -69,20 +73,16 @@
 
     setInputFilter(document.getElementById("expiry"), function(value) { return /^\d{0,2}[\/]?\d{0,2}/.test(value); });
 
-    document.getElementById('expiry').addEventListener('keyup', function (e) {
-      e.preventDefault()
-      var val = e.currentTarget.value,
-        p1 = parseInt(val[0], 10),
+    function formatExpriy (val) {
+      var p1 = parseInt(val[0], 10),
         p2 = parseInt(val[1], 10);
 
-      if (/^\d+$/.test(String.fromCharCode(e.which))) {
-        /^\d$/.test(val) && "0" !== val && "1" !== val
-          ? this.value = "0" + val + " / "
-          : /^\d\d$/.test(val)
-            ? this.value = p2 > 2 && 0 !== p1 ? "0" + p1 + " / " + p2 : "" + val + " / "
-            : void 0
-      }
-    });
+      return /^\d$/.test(val) && "0" !== val && "1" !== val
+        ? "0" + val + " / "
+        : /^\d\d$/.test(val)
+          ? p2 > 2 && 0 !== p1 ? "0" + p1 + " / " + p2 : "" + val + " / "
+          : val
+    }
   </script>
   <script>
     // Credit Card and CVV
@@ -107,8 +107,8 @@
 
     secureFields.on('ready', function () {
       // Set styles manually as they're inside an iframe and out of the scope of the parent's stylesheets
-      secureFields.setStyle('cardNumber', 'font-size: 100%; border-radius: 0; border:0; -webkit-appearance: none; padding: 0');
-      secureFields.setStyle('cvv','font-size: 100%; border-radius: 0; border:0; -webkit-appearance: none; padding: 0');
+      secureFields.setStyle('cardNumber', 'font: 16px/18px system-ui, sans-serif; border-radius: 0; border:0; -webkit-appearance: none; padding: 0');
+      secureFields.setStyle('cvv','font: 16px/18px system-ui, sans-serif; border-radius: 0; border:0; -webkit-appearance: none; padding: 0');
       secureFields.focus('cardNumber');
       secureFields.setPlaceholder("cardNumber", "4242 4242 4242 4242");
       secureFields.setPlaceholder("cvv", "123");

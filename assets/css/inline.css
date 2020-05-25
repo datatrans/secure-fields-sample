@@ -16,5 +16,5 @@
 .inline-wrapper.field__has-error .secure-field.secure-field__base.secure-field__has-card-icon.secure-field .secure-field--card-icon.secure-field--card-icon__error,
 .inline-wrapper.secure-field__has-focus-cvv .secure-field.secure-field__base.secure-field__has-card-icon .secure-field--cvv-icon { opacity: 1; visibility: visible; }
 
-#expiry { font: 16px/18px system-ui; max-width: 55px; padding: 11px 10px 10px; }
+#expiry { font: 16px/18px system-ui, sans-serif; max-width: 55px; padding: 11px 10px 10px; }
 #expiry:focus { outline: none; box-shadow: none; }
