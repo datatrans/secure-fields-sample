@@ -1,4 +1,5 @@
 .inline-wrapper { border: 1px solid #c6c6cb; display: flex; }
+.inline-wrapper.field__has-error { border-color: #e1114e; }
 .inline-wrapper > div { display: flex; }
 
 #expiry,
@@ -8,9 +9,12 @@
 .inline-wrapper .secure-field.secure-field__base.secure-field__has-actions-left .secure-field--input { padding-left: 50px; min-width: 250px; }
 .inline-wrapper .secure-field.secure-field__base.secure-field__has-card-icon .secure-field--card-icon { right: auto; left: 0; }
 
-.inline-wrapper .secure-field.secure-field__base.secure-field__has-card-icon .secure-field--cvv-icon { opacity: 0; visibility: hidden; }
-.inline-wrapper.secure-field__has-focus-cvv .secure-field.secure-field__base.secure-field__has-card-icon .secure-field--card-icon { opacity: 0; }
+.inline-wrapper .secure-field.secure-field__base.secure-field__has-card-icon .secure-field--cvv-icon,
+.inline-wrapper.field__has-error .secure-field.secure-field__base.secure-field__has-card-icon.secure-field .secure-field--card-icon.secure-field--card-icon__empty,
+.inline-wrapper.field__has-error .secure-field.secure-field__base.secure-field__has-card-icon.secure-field .secure-field--card-icon.secure-field--card-icon__recognized-card,
+.inline-wrapper.secure-field__has-focus-cvv .secure-field.secure-field__base.secure-field__has-card-icon .secure-field--card-icon { opacity: 0; visibility: hidden; }
+.inline-wrapper.field__has-error .secure-field.secure-field__base.secure-field__has-card-icon.secure-field .secure-field--card-icon.secure-field--card-icon__error,
 .inline-wrapper.secure-field__has-focus-cvv .secure-field.secure-field__base.secure-field__has-card-icon .secure-field--cvv-icon { opacity: 1; visibility: visible; }
 
-#expiry { font: 16px/18px system-ui; max-width: 55px; padding: 11px 10px 10px; }
+#expiry { font: 16px/18px system-ui, sans-serif; max-width: 55px; padding: 11px 10px 10px; }
 #expiry:focus { outline: none; box-shadow: none; }
