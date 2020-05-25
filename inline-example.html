@@ -15,33 +15,29 @@
   </nav>
   <form style="max-width: 390px; margin: 0 auto;">
     <div id="payment-container" class="inline-wrapper">
-      <div>
-        <!-- Card Number markup -->
-        <div id="card-number-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-actions-left secure-field__has-card-icon">
-          <div class="secure-field--input-container" style="height: 40px">
-            <div class="secure-field--actions">
-              <span class="secure-field--action secure-field--action__card-icon">
-                <span class="secure-field--action-card-wrap">
-                  <img class="secure-field--card-icon secure-field--card-icon__empty" src="assets/img/card-empty.svg">
-                  <img class="secure-field--card-icon secure-field--card-icon__error" src="assets/img/card-error.svg">
-                  <img class="secure-field--card-icon secure-field--card-icon__recognized-card" src="assets/img/card-recognized.svg">
-                  <img class="secure-field--card-icon secure-field--cvv-icon secure-field--card-icon__empty" src="assets/img/cvc-empty.svg">
-                </span>
+      <!-- Card Number markup -->
+      <div id="card-number-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-actions-left secure-field__has-card-icon">
+        <div class="secure-field--input-container" style="height: 40px">
+          <div class="secure-field--actions">
+            <span class="secure-field--action secure-field--action__card-icon">
+              <span class="secure-field--action-card-wrap">
+                <img class="secure-field--card-icon secure-field--card-icon__empty" src="assets/img/card-empty.svg">
+                <img class="secure-field--card-icon secure-field--card-icon__error" src="assets/img/card-error.svg">
+                <img class="secure-field--card-icon secure-field--card-icon__recognized-card" src="assets/img/card-recognized.svg">
+                <img class="secure-field--card-icon secure-field--cvv-icon secure-field--card-icon__empty" src="assets/img/cvc-empty.svg">
               </span>
-            </div>
-            <div class="secure-field--input" id="card-number"></div>
+            </span>
           </div>
+          <div class="secure-field--input" id="card-number"></div>
         </div>
       </div>
       <div>
         <input id="expiry" name="expiry" placeholder="MM/YY" type="tel" maxlength="7" />
       </div>
-      <div>
-        <!-- CVV markup -->
-        <div id="cvv-container" class="secure-field secure-field__input secure-field__base">
-          <div class="secure-field--input-container" style="height: 40px">
-            <div class="secure-field--input" id="cvv-number"></div>
-          </div>
+      <!-- CVV markup -->
+      <div id="cvv-container" class="secure-field secure-field__input secure-field__base">
+        <div class="secure-field--input-container" style="height: 40px">
+          <div class="secure-field--input" id="cvv-number"></div>
         </div>
       </div>
     </div>
@@ -132,10 +128,10 @@
 
     // Set class names when fields change
     secureFields.on('change', function (data) {
-      console.log('change', data)
       var cardImage = cardContainer.querySelector('.secure-field--card-icon__recognized-card');
       paymentContainer.classList.remove('secure-field__has-focus-cvv');
       paymentContainer.classList.remove('secure-field__has-focus-cardNumber');
+      paymentContainer.classList.remove('field__has-error');
       cardContainer.classList.remove('secure-field__has-error');
       cvvContainer.classList.remove('secure-field__has-error');
 
@@ -152,22 +148,31 @@
 
     // Set class names on validate
     secureFields.on('validate', function (data) {
+      paymentContainer.classList.remove('field__has-error');
+
       if (data.fields.cardNumber.valid) {
         cardContainer.classList.remove('secure-field__has-error');
       } else {
         cardContainer.classList.remove('secure-field__is-recognized');
         cardContainer.classList.add('secure-field__has-error');
+        paymentContainer.classList.add('field__has-error');
       }
 
       if (data.fields.cvv.valid) {
         cvvContainer.classList.remove('secure-field__has-error');
       } else {
         cvvContainer.classList.add('secure-field__has-error');
+        paymentContainer.classList.add('field__has-error');
       }
     });
 
     document.getElementById('form-submit').addEventListener('click', function () {
-      secureFields.submit();
+      // validate your expiry field here
+      if (document.getElementById('expiry').value !== '') {
+        secureFields.submit();
+      } else {
+        paymentContainer.classList.add('field__has-error');
+      }
     });
 
     secureFields.on('success', function (data) {
