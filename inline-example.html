@@ -6,44 +6,41 @@
   <title>PCI Proxy Web Tokenization</title>
   <script src="https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-1.0.0.min.js"></script>
   <link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/inline.css">
 </head>
 <body style="margin: 0;">
   <nav style="text-align: center; background: #213d62; padding: 10px; margin-bottom: 40px;">
     <a style="color: #fff; margin: 0 10px; text-decoration: none;" href="index.html">Basic Example</a>
     <a style="color: #fff; margin: 0 10px; text-decoration: none;" href="inline-example.html">Inline Example</a>
   </nav>
-  <form style="max-width: 400px; margin: 0 auto;">
-    <div style="max-width: 400px">
-      <!-- Card Number markup -->
-      <div id="card-number-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon">
-        <label for="card-number">Card Number</label>
-        <div class="secure-field--input-container" style="height: 40px">
-          <div class="secure-field--input" id="card-number"></div>
-          <div class="secure-field--actions">
-            <span class="secure-field--action secure-field--action__card-icon">
-              <span class="secure-field--action-card-wrap">
-                <img class="secure-field--card-icon secure-field--card-icon__empty" src="assets/img/card-empty.svg">
-                <img class="secure-field--card-icon secure-field--card-icon__error" src="assets/img/card-error.svg">
-                <img class="secure-field--card-icon secure-field--card-icon__recognized-card" src="assets/img/card-recognized.svg">
+  <form style="max-width: 390px; margin: 0 auto;">
+    <div id="payment-container" class="inline-wrapper">
+      <div>
+        <!-- Card Number markup -->
+        <div id="card-number-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-actions-left secure-field__has-card-icon">
+          <div class="secure-field--input-container" style="height: 40px">
+            <div class="secure-field--actions">
+              <span class="secure-field--action secure-field--action__card-icon">
+                <span class="secure-field--action-card-wrap">
+                  <img class="secure-field--card-icon secure-field--card-icon__empty" src="assets/img/card-empty.svg">
+                  <img class="secure-field--card-icon secure-field--card-icon__error" src="assets/img/card-error.svg">
+                  <img class="secure-field--card-icon secure-field--card-icon__recognized-card" src="assets/img/card-recognized.svg">
+                  <img class="secure-field--card-icon secure-field--cvv-icon secure-field--card-icon__empty" src="assets/img/cvc-empty.svg">
+                </span>
               </span>
-            </span>
+            </div>
+            <div class="secure-field--input" id="card-number"></div>
           </div>
         </div>
       </div>
-    </div>
-    <div style="max-width: 150px; margin-top: 20px">
-      <!-- CVV markup -->
-      <div id="cvv-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon">
-        <label for="cvv-number">CVV</label>
-        <div class="secure-field--input-container" style="height: 40px">
-          <div class="secure-field--input" id="cvv-number"></div>
-          <div class="secure-field--actions">
-            <span class="secure-field--action secure-field--action__card-icon">
-              <span class="secure-field--action-card-wrap">
-                <img class="secure-field--card-icon secure-field--card-icon__empty" src="assets/img/cvc-empty.svg">
-                <img class="secure-field--card-icon secure-field--card-icon__error" src="assets/img/cvc-error.svg">
-              </span>
-            </span>
+      <div>
+        <input id="expiry" name="expiry" placeholder="MM/YY" type="tel" maxlength="7" />
+      </div>
+      <div>
+        <!-- CVV markup -->
+        <div id="cvv-container" class="secure-field secure-field__input secure-field__base">
+          <div class="secure-field--input-container" style="height: 40px">
+            <div class="secure-field--input" id="cvv-number"></div>
           </div>
         </div>
       </div>
@@ -56,6 +53,43 @@
     </div>
   </form>
   <script>
+    // Expiry date
+    function setInputFilter(textbox, inputFilter) {
+      ['input', 'keydown', 'keyup', 'mousedown', 'mouseup', 'select', 'contextmenu', 'drop'].forEach(function (e) {
+        textbox.addEventListener(e, function () {
+          if (inputFilter(this.value)) {
+            this.oldValue = this.value;
+            this.oldSelectionStart = this.selectionStart;
+            this.oldSelectionEnd = this.selectionEnd;
+          } else if (this.hasOwnProperty('oldValue')) {
+            this.value = this.oldValue;
+            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+          } else {
+            this.value = '';
+          }
+        });
+      });
+    }
+
+    setInputFilter(document.getElementById("expiry"), function(value) { return /^\d{0,2}[\/]?\d{0,2}/.test(value); });
+
+    document.getElementById('expiry').addEventListener('keyup', function (e) {
+      e.preventDefault()
+      var val = e.currentTarget.value,
+        p1 = parseInt(val[0], 10),
+        p2 = parseInt(val[1], 10);
+
+      if (/^\d+$/.test(String.fromCharCode(e.which))) {
+        /^\d$/.test(val) && "0" !== val && "1" !== val
+          ? this.value = "0" + val + " / "
+          : /^\d\d$/.test(val)
+            ? this.value = p2 > 2 && 0 !== p1 ? "0" + p1 + " / " + p2 : "" + val + " / "
+            : void 0
+      }
+    });
+  </script>
+  <script>
+    // Credit Card and CVV
     var secureFields = new SecureFields();
 
     secureFields.initTokenize(
@@ -77,13 +111,16 @@
 
     secureFields.on('ready', function () {
       // Set styles manually as they're inside an iframe and out of the scope of the parent's stylesheets
-      secureFields.setStyle('cardNumber', 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0');
-      secureFields.setStyle('cvv','font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0');
+      secureFields.setStyle('cardNumber', 'font-size: 100%; border-radius: 0; border:0; -webkit-appearance: none; padding: 0');
+      secureFields.setStyle('cvv','font-size: 100%; border-radius: 0; border:0; -webkit-appearance: none; padding: 0');
       secureFields.focus('cardNumber');
+      secureFields.setPlaceholder("cardNumber", "4242 4242 4242 4242");
+      secureFields.setPlaceholder("cvv", "123");
     });
 
     var cardContainer = document.getElementById('card-number-container');
     var cvvContainer = document.getElementById('cvv-container');
+    var paymentContainer = document.getElementById('payment-container');
 
     // Set focus to input fields when clicking containers
     cardContainer.addEventListener('click', function () {
@@ -95,9 +132,14 @@
 
     // Set class names when fields change
     secureFields.on('change', function (data) {
+      console.log('change', data)
       var cardImage = cardContainer.querySelector('.secure-field--card-icon__recognized-card');
+      paymentContainer.classList.remove('secure-field__has-focus-cvv');
+      paymentContainer.classList.remove('secure-field__has-focus-cardNumber');
       cardContainer.classList.remove('secure-field__has-error');
       cvvContainer.classList.remove('secure-field__has-error');
+
+      paymentContainer.classList.add(`secure-field__has-focus-${data.event.field}`);
 
       if (!data.fields.cardNumber.paymentMethod) {
         cardImage.src = 'assets/img/card-empty.svg';
