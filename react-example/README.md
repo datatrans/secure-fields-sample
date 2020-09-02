@@ -19,4 +19,5 @@ Install all dependencies
 
 ### `npm start`
 A working bundle will be created
-Open the new lib/app.html in your browser
+Server running at http://localhost:1234
+
