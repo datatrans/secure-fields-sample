@@ -8,8 +8,8 @@ import SecureFieldIcon from './SecureFieldIcon'
 import './SecureField.css'
 
 const getUrl = (production) => production
-  ? 'https://pay.datatrans.com/upp/payment/js/secure-fields-1.0.0.min.js'
-  : 'https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-1.0.0.min.js'
+  ? 'https://pay.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js'
+  : 'https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js'
 
 const initalInputStyle = 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0'
 const initalCssClass = {
