@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react'
+import PropTypes from 'prop-types'
+
 import SecureFieldsContext from './Context'
 
 export default function SecureFieldsProvider ({ children }) {
@@ -18,4 +20,11 @@ export default function SecureFieldsProvider ({ children }) {
   )
 
   return <SecureFieldsContext.Provider value={value}>{children}</SecureFieldsContext.Provider>
+}
+
+SecureFieldsProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired
 }

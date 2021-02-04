@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
+import PropTypes from 'prop-types'
+
 import clx from 'classnames'
 
 import SecureFieldsContext from '../../src/Context'
@@ -10,8 +12,6 @@ import './SecureField.css'
 
 export default function StyledFields({ isReady, paymentMethod, error }) {
   const { secureFields } = useContext(SecureFieldsContext)
-
-  const initalInputStyle = 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0'
   const initalCssClass = {
     'secure-field': true,
     'secure-field__input ': true,
@@ -87,4 +87,10 @@ export default function StyledFields({ isReady, paymentMethod, error }) {
     </button>
   </div>
 </form>
+}
+
+StyledFields.propTypes = {
+  isReady: PropTypes.bool,
+  paymentMethod: PropTypes.string,
+  error: PropTypes.bool
 }

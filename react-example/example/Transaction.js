@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
 export default function Transaction({ transactionId, setTransactionId }) {
   const [basicAuth, setBasicAuth] = useState('')
@@ -55,4 +56,9 @@ export default function Transaction({ transactionId, setTransactionId }) {
       </label>
     </div>
   </div>
+}
+
+Transaction.propTypes = {
+  transactionId: PropTypes.string,
+  setTransactionId: PropTypes.func
 }
