@@ -3,9 +3,14 @@ import PropTypes from 'prop-types'
 
 import images from '../../../assets/img/**/*.svg'
 
-const SecureFieldIcon = ({ fieldType, iconType }) => <img alt={fieldType + '-' + iconType}
+const SecureFieldIcon = ({ fieldType, iconType }) => {
+  console.log(JSON.stringify(images))
+  console.log(iconType)
+  console.log(images[iconType])
+  return <img alt={fieldType + '-' + iconType}
     className={'secure-field--card-icon secure-field--card-icon-' + iconType}
-    src={images[iconType]} />
+    src={iconType.includes('brands') ? images.brands[iconType.replace('brands/', '')] : images[iconType]} />
+}
 
 SecureFieldIcon.propTypes = {
   fieldType: PropTypes.string,

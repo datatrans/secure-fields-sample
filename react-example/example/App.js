@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import clx from 'classnames'
 
 import Transaction from './Transaction'
 
@@ -9,13 +10,28 @@ import StyledFields from './fields'
 
 export default function SecureFieldExample() {
   const [transactionId, setTransactionId] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState()
+  const [isReady, setIsReady] = useState(false)
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState(false)
 
-  return <div>
+  const handleChange = (data) => {
+    console.log(data)
+    let p = data.fields.cardNumber.paymentMethod
+      ? data.fields.cardNumber.paymentMethod
+      : false
+
+    console.log(p)
+    setPaymentMethod(p)
+  }
+
+  return <div >
     <h1 style={{ fontFamily: 'Helvetica, sans-serif', fontWeight: 300 }}>Datatrans SecureFields Demo</h1>
-    {/* Demo to get a transactionID */}
-    {!transactionId && <Transaction transactionId={transactionId} setTransactionId={setTransactionId} />}
 
-    {transactionId && <div>
+    {/* Demo to get a transactionID */}
+    <Transaction transactionId={transactionId} setTransactionId={setTransactionId} />
+
+    {transactionId && <div className='col-half'>
       <SecureFields
         transactionId={transactionId}
         production={false /* Default: false */}
@@ -23,12 +39,24 @@ export default function SecureFieldExample() {
           cardNumber: 'card-number',
           cvv: 'cvv-number'
         }}
+        onReady={() => { setIsReady(true) }}
         onSuccess={() => {}}
         onValidate={() => {}}
-        onChange={(data) => { console.log(data) }}
+        onChange={(data) => handleChange(data)}
+        onError={(data) => {
+          setMessage(data)
+          setError(true)
+          setIsReady(true)
+        }}
       />
-      <StyledFields />
+      <StyledFields
+        paymentMethod={paymentMethod}
+        isReady={isReady}
+      />
+      {message && <div style={{maxWidth: '400px', margin: '20px auto'}}>
+        <p className={clx({ error })}>{message}</p>
+        </div>
+      }
     </div>}
-
   </div>
 }

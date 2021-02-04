@@ -1,9 +1,9 @@
-# PCI Proxy Web Tokenization
+# Datatrans Secure Fields
 
 This project contains sample code for implementing a visually pleasing credit card tokenization form
-with [PCI Proxy](https://www.pci-proxy.com/) with [ReactJS](https://reactjs.org/).
+with [ReactJS](https://reactjs.org/).
 
-Further information can be found in the [PCI Proxy Documentation](https://docs.pci-proxy.com/collect-and-store-cards/capture-iframes).
+Further information can be found in the [Documentation](https://docs.datatrans.ch/docs/secure-fields).
 
 ## Usage
 

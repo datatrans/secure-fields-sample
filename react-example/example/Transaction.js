@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react'
 
 export default function Transaction({ transactionId, setTransactionId }) {
-  const [loading, setLoading] = useState(false)
   const [basicAuth, setBasicAuth] = useState('')
   const [merchantId, setMerchantId] = useState('')
   const [password, setPassword] = useState('')
   const [amount, setAmount] = useState(1000)
-
-  const onClick = () => {
-    setLoading(true)
-  }
 
   useEffect(() => {
     if (merchantId && password) {
@@ -17,8 +12,7 @@ export default function Transaction({ transactionId, setTransactionId }) {
     }
   }, [merchantId, password])
 
-  return <div>
-    <h1 style={{ fontFamily: 'Helvetica, sans-serif', fontWeight: 300 }}>Datatrans SecureFields Demo</h1>
+  return <div className='col-half'>
     <div>
       <h2>Step 1:</h2>
       <p>Fill in your basicAuth to complete the code example below:<br/>
@@ -59,8 +53,6 @@ export default function Transaction({ transactionId, setTransactionId }) {
         Transaction ID
         <input id='transactionId' type='text' value={transactionId} onChange={(e) => setTransactionId(e.target.value)} />
       </label>
-      {!loading && <button onClick={onClick} disabled={!transactionId}>Start SecureFields</button>}
-      {loading && <span className='loader'></span>}
     </div>
   </div>
 }

@@ -8,8 +8,9 @@ import SecureFieldIcon from './SecureFieldIcon'
 
 import './SecureField.css'
 
-export default function StyledFields() {
+export default function StyledFields({ isReady, paymentMethod }) {
   const { secureFields } = useContext(SecureFieldsContext)
+  const [cardIcon, setCardIcon] = useState('card-empty')
 
   const initalInputStyle = 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0'
   const initalCssClass = {
@@ -22,27 +23,26 @@ export default function StyledFields() {
     'secure-field__is-recognized': false
   }
 
-  const message = null
-  const cardIcon = 'card-empty'
   const cvvIcon = 'cvc-empty'
   const cardContainerClassNames = initalCssClass
   const cvvContainerClassNames = initalCssClass
 
   useEffect(() => {
-    console.log(secureFields)
-    if (!secureFields) {
+    if (!secureFields || !paymentMethod) {
       return
     }
 
-    console.log('onChange')
+    console.log(paymentMethod)
+    console.log(cardIcon)
+    setCardIcon(paymentMethod ? ('brands/'+ paymentMethod) : 'card-empty')
 
     // Set class names and icon when fields change
-    secureFields.on('change', (data) => {
-      let paymentMethod = data.fields.cardNumber.paymentMethod
-        ? data.fields.cardNumber.paymentMethod
-        : false
+    // secureFields.on('change', (data) => {
+    //   let paymentMethod = data.fields.cardNumber.paymentMethod
+    //     ? data.fields.cardNumber.paymentMethod
+    //     : false
 
-      console.log(paymentMethod)
+    //   console.log(paymentMethod)
 
       // this.setState(prevState => ({
       //   message: null,
@@ -58,7 +58,7 @@ export default function StyledFields() {
       //   cardIcon: paymentMethod ? ('brands/'+ paymentMethod) : 'card-empty',
       //   cvvIcon: 'cvc-empty'
       // }))
-    })
+    // })
 
     // Set error icon and class name on validate failure
     // secureFields.on('validate', (data) => {
@@ -102,9 +102,10 @@ export default function StyledFields() {
     //   }
     //   this.setState({message: message})
     // })
-  }, [secureFields])
+  }, [secureFields, paymentMethod])
 
-  return <form onSubmit={() => secureFields.submit()}>
+  return <form onSubmit={() => secureFields.submit()} style={{ margin: '0 auto', width: '400px' }}>
+  {!isReady && <span className='loader'></span>}
   <div style={{maxWidth: '400px'}}>
     {/* <!-- Card Number markup --> */}
     <SecureField
@@ -121,15 +122,14 @@ export default function StyledFields() {
       fieldType='cvv'
       label='CVV'
       customClass={clx(cvvContainerClassNames)}
-      callback={() => secureFields.focus('cvv')}>
+      callback={() => secureFields.focus('cvv') }>
       <SecureFieldIcon fieldType='cvv' iconType={cvvIcon} />
     </SecureField>
   </div>
   <div style={{maxWidth: '400px', marginTop: '20px'}}>
-    <button type="button" id="form-submit" onClick={() => secureFields.submit()}>
+    <button type="button" id="form-submit" onClick={() => secureFields.submit()} disabled={!isReady}>
       Submit
     </button>
-    {message}
   </div>
 </form>
 }

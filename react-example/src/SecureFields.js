@@ -60,12 +60,16 @@ const SecureFields = (props) => {
 
   useEffect(() => {
     if (secureFields) {
-      console.log('binding Events')
+      secureFields.on('ready', () => props.onReady())
       secureFields.on('success', (data) => props.onSuccess(data))
       secureFields.on('validate', (data) => props.onValidate(data))
       secureFields.on('change', (data) => {
-        console.log('foo')
+        console.log(data)
         props.onChange(data)
+      })
+      secureFields.on('error', (data) => {
+        console.log(data)
+        props.onError(data)
       })
     }
   }, [secureFields])
@@ -80,17 +84,21 @@ SecureFields.propTypes = {
     cvv: PropTypes.string
   }),
 
+  onReady: PropTypes.func,
   onSuccess: PropTypes.func,
   onValidate: PropTypes.func,
   onChange: PropTypes.func,
+  onError: PropTypes.func,
 
   production: PropTypes.bool
 }
 
 SecureFields.defaultProps = {
+  onReady() {},
   onSuccess() {},
   onValidate() {},
   onChange() {},
+  onError() {},
   production: false
 }
 
