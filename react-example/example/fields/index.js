@@ -8,9 +8,8 @@ import SecureFieldIcon from './SecureFieldIcon'
 
 import './SecureField.css'
 
-export default function StyledFields({ isReady, paymentMethod }) {
+export default function StyledFields({ isReady, paymentMethod, error }) {
   const { secureFields } = useContext(SecureFieldsContext)
-  const [cardIcon, setCardIcon] = useState('card-empty')
 
   const initalInputStyle = 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0'
   const initalCssClass = {
@@ -23,18 +22,28 @@ export default function StyledFields({ isReady, paymentMethod }) {
     'secure-field__is-recognized': false
   }
 
-  const cvvIcon = 'cvc-empty'
-  const cardContainerClassNames = initalCssClass
-  const cvvContainerClassNames = initalCssClass
+  const [cardIcon, setCardIcon] = useState('card-empty')
+  const [cvvIcon, setCvvIcon] = useState('cvc-empty')
+  const [cardContainerClassNames, setCardContainerClassNames] = useState(initalCssClass)
+  const [cvvContainerClassNames, setCvvContainerClassNames] = useState(initalCssClass)
 
   useEffect(() => {
     if (!secureFields || !paymentMethod) {
       return
     }
 
-    console.log(paymentMethod)
-    console.log(cardIcon)
     setCardIcon(paymentMethod ? ('brands/'+ paymentMethod) : 'card-empty')
+    setCardContainerClassNames({
+      ...cardContainerClassNames,
+      'secure-field__is-recognized': !!paymentMethod,
+      'secure-field__has-error': !!error
+    })
+    setCvvContainerClassNames({
+      ...cvvContainerClassNames,
+      'secure-field__is-recognized': !!paymentMethod,
+      'secure-field__has-error': !!error
+    })
+
 
     // Set class names and icon when fields change
     // secureFields.on('change', (data) => {
@@ -102,7 +111,7 @@ export default function StyledFields({ isReady, paymentMethod }) {
     //   }
     //   this.setState({message: message})
     // })
-  }, [secureFields, paymentMethod])
+  }, [secureFields, paymentMethod, error])
 
   return <form onSubmit={() => secureFields.submit()} style={{ margin: '0 auto', width: '400px' }}>
   {!isReady && <span className='loader'></span>}

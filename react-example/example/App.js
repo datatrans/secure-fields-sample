@@ -16,12 +16,11 @@ export default function SecureFieldExample() {
   const [error, setError] = useState(false)
 
   const handleChange = (data) => {
-    console.log(data)
     let p = data.fields.cardNumber.paymentMethod
       ? data.fields.cardNumber.paymentMethod
       : false
 
-    console.log(p)
+    setError(false)
     setPaymentMethod(p)
   }
 
@@ -31,7 +30,7 @@ export default function SecureFieldExample() {
     {/* Demo to get a transactionID */}
     <Transaction transactionId={transactionId} setTransactionId={setTransactionId} />
 
-    {transactionId && <div className='col-half'>
+    <div className='col-half'>
       <SecureFields
         transactionId={transactionId}
         production={false /* Default: false */}
@@ -52,11 +51,12 @@ export default function SecureFieldExample() {
       <StyledFields
         paymentMethod={paymentMethod}
         isReady={isReady}
+        error={error}
       />
       {message && <div style={{maxWidth: '400px', margin: '20px auto'}}>
         <p className={clx({ error })}>{message}</p>
         </div>
       }
-    </div>}
+    </div>
   </div>
 }
