@@ -63,14 +63,8 @@ const SecureFields = (props) => {
       secureFields.on('ready', () => props.onReady())
       secureFields.on('success', (data) => props.onSuccess(data))
       secureFields.on('validate', (data) => props.onValidate(data))
-      secureFields.on('change', (data) => {
-        console.log(data)
-        props.onChange(data)
-      })
-      secureFields.on('error', (data) => {
-        console.log(data)
-        props.onError(data)
-      })
+      secureFields.on('change', (data) => props.onChange(data))
+      secureFields.on('error', (data) => props.onError(data))
     }
   }, [secureFields])
 

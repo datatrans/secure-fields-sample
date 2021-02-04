@@ -21,6 +21,11 @@ export default function StyledFields({ isReady, paymentMethod, error }) {
     'secure-field__has-error': false,
     'secure-field__is-recognized': false
   }
+  // ask for the expiry in your form
+  const expiry = {
+    expm: 12,
+    expy: 25
+  }
 
   const [cardIcon, setCardIcon] = useState('card-empty')
   const [cvvIcon, setCvvIcon] = useState('cvc-empty')
@@ -44,76 +49,17 @@ export default function StyledFields({ isReady, paymentMethod, error }) {
       'secure-field__has-error': !!error
     })
 
-
-    // Set class names and icon when fields change
-    // secureFields.on('change', (data) => {
-    //   let paymentMethod = data.fields.cardNumber.paymentMethod
-    //     ? data.fields.cardNumber.paymentMethod
-    //     : false
-
-    //   console.log(paymentMethod)
-
-      // this.setState(prevState => ({
-      //   message: null,
-      //   cardContainerClassNames: {
-      //     ...prevState.cardContainerClassNames,
-      //     'secure-field__is-recognized': !!paymentMethod,
-      //     'secure-field__has-error': false
-      //   },
-      //   cvvContainerClassNames: {
-      //     ...prevState.cvvContainerClassNames,
-      //     'secure-field__has-error': false
-      //   },
-      //   cardIcon: paymentMethod ? ('brands/'+ paymentMethod) : 'card-empty',
-      //   cvvIcon: 'cvc-empty'
-      // }))
-    // })
-
-    // Set error icon and class name on validate failure
-    // secureFields.on('validate', (data) => {
-    //   if (!data.fields.cardNumber.valid) {
-    //     this.setState(prevState => ({
-    //       cardContainerClassNames: {
-    //         ...prevState.cardContainerClassNames,
-    //         'secure-field__is-recognized': false,
-    //         'secure-field__has-error': true
-    //       },
-    //       cardIcon: 'card-error'
-    //     }))
-    //   }
-
-    //   if (!data.fields.cvv.valid) {
-    //     this.setState(prevState => ({
-    //       cvvContainerClassNames: {
-    //         ...prevState.cvvContainerClassNames,
-    //         'secure-field__has-error': true
-    //       },
-    //       cvvIcon: 'cvc-error'
-    //     }))
-    //   }
-    // })
-
-    // // Show transaction ID on success or transaction error message
-    // secureFields.on('success', (data) => {
-    //   let message = null
-    //   if (data.transactionId) {
-    //     message = (
-    //       <pre className={'form-result success'} style={{marginTop: '20px', fontSize: '1rem'}}>
-    //         Data submitted successfully with transaction # {data.transactionId}
-    //       </pre>
-    //     )
-    //   } else if (data.error) {
-    //     message = (
-    //       <pre className={'form-result ' + data.result} style={{marginTop: '20px', fontSize: '1rem'}}>
-    //         {data.error}
-    //       </pre>
-    //     )
-    //   }
-    //   this.setState({message: message})
-    // })
+    if (error === 'card') {
+      setCardIcon('card-error')
+    }
+    if (error === 'cvv') {
+      setCvvIcon('cvc-error')
+    } else {
+      setCvvIcon('cvc-empty')
+    }
   }, [secureFields, paymentMethod, error])
 
-  return <form onSubmit={() => secureFields.submit()} style={{ margin: '0 auto', width: '400px' }}>
+  return <form onSubmit={() => secureFields.submit(expiry)} style={{ margin: '0 auto', width: '400px' }}>
   {!isReady && <span className='loader'></span>}
   <div style={{maxWidth: '400px'}}>
     {/* <!-- Card Number markup --> */}
@@ -136,7 +82,7 @@ export default function StyledFields({ isReady, paymentMethod, error }) {
     </SecureField>
   </div>
   <div style={{maxWidth: '400px', marginTop: '20px'}}>
-    <button type="button" id="form-submit" onClick={() => secureFields.submit()} disabled={!isReady}>
+    <button type="button" id="form-submit" onClick={() => secureFields.submit(expiry)} disabled={!isReady}>
       Submit
     </button>
   </div>

@@ -24,13 +24,33 @@ export default function SecureFieldExample() {
     setPaymentMethod(p)
   }
 
+  const handleValidate = (data) => {
+    if (!data.fields.cardNumber.valid) {
+      setError('card')
+    }
+
+    if (!data.fields.cvv.valid) {
+      setError('cvv')
+    }
+  }
+
+  const handleSuccess = (data) => {
+    console.log(data)
+    if (data.transactionId) {
+      setMessage(`Data submitted successfully with transaction # ${data.transactionId}`)
+    } else if (data.error) {
+      setMessage(data.error)
+      setError(true)
+    }
+  }
+
   return <div >
     <h1 style={{ fontFamily: 'Helvetica, sans-serif', fontWeight: 300 }}>Datatrans SecureFields Demo</h1>
 
     {/* Demo to get a transactionID */}
     <Transaction transactionId={transactionId} setTransactionId={setTransactionId} />
 
-    <div className='col-half'>
+    {transactionId && <div className='col-half'>
       <SecureFields
         transactionId={transactionId}
         production={false /* Default: false */}
@@ -39,9 +59,9 @@ export default function SecureFieldExample() {
           cvv: 'cvv-number'
         }}
         onReady={() => { setIsReady(true) }}
-        onSuccess={() => {}}
-        onValidate={() => {}}
-        onChange={(data) => handleChange(data)}
+        onSuccess={handleSuccess}
+        onValidate={handleValidate}
+        onChange={handleChange}
         onError={(data) => {
           setMessage(data)
           setError(true)
@@ -54,9 +74,12 @@ export default function SecureFieldExample() {
         error={error}
       />
       {message && <div style={{maxWidth: '400px', margin: '20px auto'}}>
-        <p className={clx({ error })}>{message}</p>
+        <p className={clx({
+          error,
+          success: !error
+        })}>{message}</p>
         </div>
       }
-    </div>
+    </div>}
   </div>
 }

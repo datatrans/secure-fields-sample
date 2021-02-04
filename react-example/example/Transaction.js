@@ -12,7 +12,7 @@ export default function Transaction({ transactionId, setTransactionId }) {
     }
   }, [merchantId, password])
 
-  return <div className='col-half'>
+  return <div className='col-half' style={{ borderRight: transactionId ? '1px solid' : null, paddingRight: '20px' }}>
     <div>
       <h2>Step 1:</h2>
       <p>Fill in your basicAuth to complete the code example below:<br/>
