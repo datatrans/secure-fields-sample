@@ -9,10 +9,9 @@ const getUrl = (production) => production
 
 
 const initSecureFields = ({ transactionId, fields }) => {
-  const { setSecureFields } = useContext(SecureFieldsContext)
   const secureFields = new window.SecureFields()
   secureFields.init(transactionId, fields)
-  setSecureFields(secureFields)
+  return secureFields
 }
 
 const cleanupSecureFields = () => {
@@ -28,12 +27,21 @@ const cleanupSecureFields = () => {
 }
 
 const SecureFields = (props) => {
+  const { secureFields, setSecureFields } = useContext(SecureFieldsContext)
+
   useEffect(() => {
+    if (secureFields) {
+      // already loaded
+      return
+    }
+
     const { production } = props
     const scriptSource = getUrl(production)
+    let scope
 
     if (document.querySelector('script[src="' + scriptSource + '"]')) {
-      initSecureFields(props)
+      scope = initSecureFields(props)
+      setSecureFields(scope)
 
       return cleanupSecureFields
     }
@@ -41,13 +49,26 @@ const SecureFields = (props) => {
     const script = document.createElement('script')
     script.src = scriptSource
     script.onload = () => {
-      initSecureFields(props)
+      scope = initSecureFields(props)
+      setSecureFields(scope)
     }
 
     document.body.appendChild(script)
 
     return cleanupSecureFields
   })
+
+  useEffect(() => {
+    if (secureFields) {
+      console.log('binding Events')
+      secureFields.on('success', (data) => props.onSuccess(data))
+      secureFields.on('validate', (data) => props.onValidate(data))
+      secureFields.on('change', (data) => {
+        console.log('foo')
+        props.onChange(data)
+      })
+    }
+  }, [secureFields])
 
   return null
 }
@@ -58,10 +79,18 @@ SecureFields.propTypes = {
     cardNumber: PropTypes.string,
     cvv: PropTypes.string
   }),
+
+  onSuccess: PropTypes.func,
+  onValidate: PropTypes.func,
+  onChange: PropTypes.func,
+
   production: PropTypes.bool
 }
 
 SecureFields.defaultProps = {
+  onSuccess() {},
+  onValidate() {},
+  onChange() {},
   production: false
 }
 

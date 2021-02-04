@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import clx from 'classnames'
 
-import SecureFields from '../../src'
+import SecureFieldsContext from '../../src/Context'
 
 import SecureField from './SecureField'
 import SecureFieldIcon from './SecureFieldIcon'
@@ -9,7 +9,7 @@ import SecureFieldIcon from './SecureFieldIcon'
 import './SecureField.css'
 
 export default function StyledFields() {
-  const { secureFields } = useContext(SecureFields.Context)
+  const { secureFields } = useContext(SecureFieldsContext)
 
   const initalInputStyle = 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0'
   const initalCssClass = {
@@ -27,6 +27,82 @@ export default function StyledFields() {
   const cvvIcon = 'cvc-empty'
   const cardContainerClassNames = initalCssClass
   const cvvContainerClassNames = initalCssClass
+
+  useEffect(() => {
+    console.log(secureFields)
+    if (!secureFields) {
+      return
+    }
+
+    console.log('onChange')
+
+    // Set class names and icon when fields change
+    secureFields.on('change', (data) => {
+      let paymentMethod = data.fields.cardNumber.paymentMethod
+        ? data.fields.cardNumber.paymentMethod
+        : false
+
+      console.log(paymentMethod)
+
+      // this.setState(prevState => ({
+      //   message: null,
+      //   cardContainerClassNames: {
+      //     ...prevState.cardContainerClassNames,
+      //     'secure-field__is-recognized': !!paymentMethod,
+      //     'secure-field__has-error': false
+      //   },
+      //   cvvContainerClassNames: {
+      //     ...prevState.cvvContainerClassNames,
+      //     'secure-field__has-error': false
+      //   },
+      //   cardIcon: paymentMethod ? ('brands/'+ paymentMethod) : 'card-empty',
+      //   cvvIcon: 'cvc-empty'
+      // }))
+    })
+
+    // Set error icon and class name on validate failure
+    // secureFields.on('validate', (data) => {
+    //   if (!data.fields.cardNumber.valid) {
+    //     this.setState(prevState => ({
+    //       cardContainerClassNames: {
+    //         ...prevState.cardContainerClassNames,
+    //         'secure-field__is-recognized': false,
+    //         'secure-field__has-error': true
+    //       },
+    //       cardIcon: 'card-error'
+    //     }))
+    //   }
+
+    //   if (!data.fields.cvv.valid) {
+    //     this.setState(prevState => ({
+    //       cvvContainerClassNames: {
+    //         ...prevState.cvvContainerClassNames,
+    //         'secure-field__has-error': true
+    //       },
+    //       cvvIcon: 'cvc-error'
+    //     }))
+    //   }
+    // })
+
+    // // Show transaction ID on success or transaction error message
+    // secureFields.on('success', (data) => {
+    //   let message = null
+    //   if (data.transactionId) {
+    //     message = (
+    //       <pre className={'form-result success'} style={{marginTop: '20px', fontSize: '1rem'}}>
+    //         Data submitted successfully with transaction # {data.transactionId}
+    //       </pre>
+    //     )
+    //   } else if (data.error) {
+    //     message = (
+    //       <pre className={'form-result ' + data.result} style={{marginTop: '20px', fontSize: '1rem'}}>
+    //         {data.error}
+    //       </pre>
+    //     )
+    //   }
+    //   this.setState({message: message})
+    // })
+  }, [secureFields])
 
   return <form onSubmit={() => secureFields.submit()}>
   <div style={{maxWidth: '400px'}}>

@@ -3,11 +3,11 @@ import ReactDom from 'react-dom'
 
 import App from './App'
 
-import SecureFields from '../src'
+import SecureFieldsProvider from '../src/Provider'
 
 ReactDom.render(
-  <SecureFields.Provider>
+  <SecureFieldsProvider>
     <App />
-  </SecureFields.Provider>,
+  </SecureFieldsProvider>,
   document.getElementById('app')
 )

@@ -23,6 +23,9 @@ export default function SecureFieldExample() {
           cardNumber: 'card-number',
           cvv: 'cvv-number'
         }}
+        onSuccess={() => {}}
+        onValidate={() => {}}
+        onChange={(data) => { console.log(data) }}
       />
       <StyledFields />
     </div>}

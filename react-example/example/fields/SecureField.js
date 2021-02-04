@@ -22,7 +22,10 @@ SecureField.propTypes = {
   label: PropTypes.string,
   customClass: PropTypes.string,
   callback: PropTypes.func,
-  children: PropTypes.array
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired
 }
 
 export default SecureField

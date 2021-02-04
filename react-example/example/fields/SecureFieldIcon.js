@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import images from '../../../assets/img/**/*.svg'
+
 const SecureFieldIcon = ({ fieldType, iconType }) => <img alt={fieldType + '-' + iconType}
     className={'secure-field--card-icon secure-field--card-icon-' + iconType}
-    src={'../../../assets/img/' + iconType + '.svg'} />
+    src={images[iconType]} />
 
 SecureFieldIcon.propTypes = {
   fieldType: PropTypes.string,
