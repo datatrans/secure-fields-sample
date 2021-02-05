@@ -37,7 +37,12 @@ export default function SecureFieldExample() {
   const handleSuccess = (data) => {
     console.log(data)
     if (data.transactionId) {
-      setMessage(`Data submitted successfully with transaction # ${data.transactionId}`)
+      setMessage(`Data submitted successfully with transaction # ${data.transactionId}\n\n
+Card Brand: ${data.cardInfo.brand}\n
+Card Type: ${data.cardInfo.type}\n
+Card Country: ${data.cardInfo.country}\n
+Card Issuer: ${data.cardInfo.issuer}\n
+Card Usage: ${data.cardInfo.usage}`)
     } else if (data.error) {
       setMessage(data.error)
       setError(true)
@@ -63,7 +68,11 @@ export default function SecureFieldExample() {
         onValidate={handleValidate}
         onChange={handleChange}
         onError={(data) => {
-          setMessage(data)
+          if (data.error) {
+            setMessage(data.error)
+          } else {
+            setMessage(data)
+          }
           setError(true)
           setIsReady(true)
         }}
@@ -74,7 +83,7 @@ export default function SecureFieldExample() {
         error={error}
       />
       {message && <div style={{maxWidth: '400px', margin: '20px auto'}}>
-        <p className={clx({
+        <p className={clx('message', {
           error,
           success: !error
         })}>{message}</p>

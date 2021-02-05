@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 export default function Transaction({ transactionId, setTransactionId }) {
-  const [basicAuth, setBasicAuth] = useState('')
   const [merchantId, setMerchantId] = useState('')
   const [password, setPassword] = useState('')
   const [amount, setAmount] = useState(1000)
-
-  useEffect(() => {
-    if (merchantId && password) {
-      setBasicAuth(window.btoa(`${merchantId}:${password}`))
-    }
-  }, [merchantId, password])
 
   return <div className='col-half' style={{ borderRight: transactionId ? '1px solid' : null, paddingRight: '20px' }}>
     <div>
@@ -35,15 +28,15 @@ export default function Transaction({ transactionId, setTransactionId }) {
       </label>
       <h2>Step 2:</h2>
       <p>Run this example on your server:<br/>
-        <small><a href="https://api-reference.datatrans.ch/#tag/v1transactions">Documentation: Initialize a transaction</a></small></p>
+        <small><a href="https://api-reference.datatrans.ch/#operation/secureFieldsInit">Documentation: Initialize a transaction</a></small></p>
       <code style={{ userSelect: 'all' }}>
         <pre style={{ maxWidth: '700px' }}>
-        curl &apos;https://api.sandbox.datatrans.com/v1/transactions&apos; \<br/>
-          --header &apos;Authorization: Basic {basicAuth}&apos; \<br/>
+        curl -i -u {merchantId}:{password} \<br/>
+          &apos;https://api.sandbox.datatrans.com/v1/transactions/secureFields&apos; \<br/>
           --header &apos;Content-Type: application/json&apos; \<br/>
           --data-raw &apos;{JSON.stringify({
             currency: 'CHF',
-            refno: 'react-light-box',
+            returnUrl: 'https://pay.sandbox.datatrans.com/upp/merchant/successPage.jsp',
             amount: parseInt(amount, 10),
           }, null, ' ')}&apos;
         </pre>
