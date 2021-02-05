@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 export default function Transaction({ transactionId, setTransactionId }) {
   const [merchantId, setMerchantId] = useState('')
   const [password, setPassword] = useState('')
+  const [returnUrl, setReturnUrl] = useState('')
   const [amount, setAmount] = useState(1000)
 
   return <div className='col-half' style={{ borderRight: transactionId ? '1px solid' : null, paddingRight: '20px' }}>
@@ -22,6 +23,11 @@ export default function Transaction({ transactionId, setTransactionId }) {
         <input id='password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
 
+      <label htmlFor='returnUrl'>
+        Return Url
+        <input id='returnUrl' type='text' value={returnUrl} onChange={(e) => setReturnUrl(e.target.value)} />
+      </label>
+
       <label htmlFor='amount'>
         Amount in the currency&lsquo;s smallest unit<br/>(e.g. 1000 = 10CHF)
         <input id='amount' type='text' value={amount} onChange={(e) => setAmount(e.target.value)} />
@@ -36,7 +42,7 @@ export default function Transaction({ transactionId, setTransactionId }) {
           --header &apos;Content-Type: application/json&apos; \<br/>
           --data-raw &apos;{JSON.stringify({
             currency: 'CHF',
-            returnUrl: 'https://pay.sandbox.datatrans.com/upp/merchant/successPage.jsp',
+            returnUrl,
             amount: parseInt(amount, 10),
           }, null, ' ')}&apos;
         </pre>
@@ -45,7 +51,7 @@ export default function Transaction({ transactionId, setTransactionId }) {
       <p>Copy the transactionId from the call above:<br/>Please note that a transactionId is only valid htmlFor 30 minutes.</p>
       <label htmlFor='transactionId'>
         Transaction ID
-        <input id='transactionId' type='text' value={transactionId} onChange={(e) => setTransactionId(e.target.value)} />
+        <input id='transactionId' type='text' value={transactionId} onChange={(e) => setTransactionId(e.target.value)} readOnly={transactionId} />
       </label>
     </div>
   </div>
