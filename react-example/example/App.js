@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import clx from 'classnames'
 
 import Transaction from './Transaction'
 
@@ -12,7 +11,7 @@ export default function SecureFieldExample() {
   const [transactionId, setTransactionId] = useState('')
   const [paymentMethod, setPaymentMethod] = useState()
   const [isReady, setIsReady] = useState(false)
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState()
   const [error, setError] = useState(false)
 
   const handleChange = (data) => {
@@ -35,16 +34,20 @@ export default function SecureFieldExample() {
   }
 
   const handleSuccess = (data) => {
-    console.log(data)
     if (data.transactionId) {
-      setMessage(`Data submitted successfully with transaction # ${data.transactionId}\n\n
-Card Brand: ${data.cardInfo.brand}\n
-Card Type: ${data.cardInfo.type}\n
-Card Country: ${data.cardInfo.country}\n
-Card Issuer: ${data.cardInfo.issuer}\n
-Card Usage: ${data.cardInfo.usage}`)
+      setMessage(<div>
+        <p className='message success'>Data submitted successfully</p>
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          <li><b>Transaction #</b> {data.transactionId}</li>
+          <li><b>Card Brand:</b> {data.cardInfo.brand}</li>
+          <li><b>Card Type:</b> {data.cardInfo.type}</li>
+          <li><b>Card Country:</b> {data.cardInfo.country}</li>
+          <li><b>Card Issuer:</b> {data.cardInfo.issuer}</li>
+          <li><b>Card Usage:</b> {data.cardInfo.usage}</li>
+        </ul>
+      </div>)
     } else if (data.error) {
-      setMessage(data.error)
+      setMessage(<p className='message error'>{data.error}</p>)
       setError(true)
     }
   }
@@ -55,7 +58,7 @@ Card Usage: ${data.cardInfo.usage}`)
     {/* Demo to get a transactionID */}
     <Transaction transactionId={transactionId} setTransactionId={setTransactionId} />
 
-    {transactionId && <div className='col-half'>
+    {transactionId && <div style={{ float: 'left', padding: '0 20px', maxWidth: '400px', position: 'relative' }}>
       <SecureFields
         transactionId={transactionId}
         production={false /* Default: false */}
@@ -69,9 +72,9 @@ Card Usage: ${data.cardInfo.usage}`)
         onChange={handleChange}
         onError={(data) => {
           if (data.error) {
-            setMessage(data.error)
+            setMessage(<p className='message error'>{data.error}</p>)
           } else {
-            setMessage(data)
+            setMessage(<p className='message error'>{data}</p>)
           }
           setError(true)
           setIsReady(true)
@@ -82,13 +85,7 @@ Card Usage: ${data.cardInfo.usage}`)
         isReady={isReady}
         error={error}
       />
-      {message && <div style={{maxWidth: '400px', margin: '20px auto'}}>
-        <p className={clx('message', {
-          error,
-          success: !error
-        })}>{message}</p>
-        </div>
-      }
+      {message && message}
     </div>}
   </div>
 }

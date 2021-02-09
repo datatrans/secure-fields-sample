@@ -7,9 +7,14 @@ export default function Transaction({ transactionId, setTransactionId }) {
   const [returnUrl, setReturnUrl] = useState('')
   const [amount, setAmount] = useState(1000)
 
-  return <div className='col-half' style={{ borderRight: transactionId ? '1px solid' : null, paddingRight: '20px' }}>
+  return <div className='col-half' style={{ borderRight: transactionId ? '1px solid' : null, paddingRight: '20px',
+    width: '49%',
+    float: 'left',
+    minWidth: '600px',
+    marginBottom: '20px'
+  }}>
     <div>
-      <h2>Step 1:</h2>
+      <h2 style={{ marginTop: 0 }} >Step 1:</h2>
       <p>Fill in your basicAuth to complete the code example below:<br/>
         <small><a href="https://api-reference.datatrans.ch/#section/Authentication">Documentation: Authentication</a></small>
       </p>
@@ -48,7 +53,7 @@ export default function Transaction({ transactionId, setTransactionId }) {
         </pre>
       </code>
       <h2>Step 3:</h2>
-      <p>Copy the transactionId from the call above:<br/>Please note that a transactionId is only valid htmlFor 30 minutes.</p>
+      <p>Copy the transactionId from the call above:<br/>Please note that a transactionId is only valid 30 minutes.</p>
       <label htmlFor='transactionId'>
         Transaction ID
         <input id='transactionId' type='text' value={transactionId} onChange={(e) => setTransactionId(e.target.value)} readOnly={transactionId} />

@@ -59,9 +59,9 @@ export default function StyledFields({ isReady, paymentMethod, error }) {
     }
   }, [secureFields, paymentMethod, error])
 
-  return <form onSubmit={() => secureFields.submit(expiry)} style={{ margin: '0 auto', width: '400px' }}>
+  return <form onSubmit={() => secureFields.submit(expiry)}>
   {!isReady && <span className='loader'></span>}
-  <div style={{maxWidth: '400px'}}>
+  <div style={{ opacity: isReady ? 1 : '0.5' }}>
     {/* <!-- Card Number markup --> */}
     <SecureField
       fieldType='card'
@@ -70,21 +70,21 @@ export default function StyledFields({ isReady, paymentMethod, error }) {
       callback={() => secureFields.focus('cardNumber')}>
       <SecureFieldIcon fieldType='card' iconType={cardIcon} />
     </SecureField>
-  </div>
-  <div style={{maxWidth: '150px', marginTop: '20px'}}>
-    {/* <!-- CVV markup --> */}
-    <SecureField
-      fieldType='cvv'
-      label='CVV'
-      customClass={clx(cvvContainerClassNames)}
-      callback={() => secureFields.focus('cvv') }>
-      <SecureFieldIcon fieldType='cvv' iconType={cvvIcon} />
-    </SecureField>
-  </div>
-  <div style={{maxWidth: '400px', marginTop: '20px'}}>
-    <button type="button" id="form-submit" onClick={() => secureFields.submit(expiry)} disabled={!isReady}>
-      Submit
-    </button>
+    <div style={{ maxWidth: '150px', marginTop: '20px' }}>
+      {/* <!-- CVV markup --> */}
+      <SecureField
+        fieldType='cvv'
+        label='CVV'
+        customClass={clx(cvvContainerClassNames)}
+        callback={() => secureFields.focus('cvv') }>
+        <SecureFieldIcon fieldType='cvv' iconType={cvvIcon} />
+      </SecureField>
+    </div>
+    <div style={{ marginTop: '20px' }}>
+      <button type="button" id="form-submit" onClick={() => secureFields.submit(expiry)} disabled={!isReady}>
+        Submit
+      </button>
+    </div>
   </div>
 </form>
 }
