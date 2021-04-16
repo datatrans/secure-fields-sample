@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>PCI Proxy Web Tokenization</title>
+  <script src="https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css">
+</head>
+<body style="margin: 0;">
+  <nav style="text-align: center; background: #213d62; padding: 10px; margin-bottom: 40px;">
+    <a style="color: #fff; margin: 0 10px; text-decoration: none;" href="index.html">Basic Example</a>
+    <a style="color: #fff; margin: 0 10px; text-decoration: none;" href="inline-example.html">Inline Example</a>
+    <a style="color: #fff; margin: 0 10px; text-decoration: none;" href="floating-label.html">Floating Label Example</a>
+    <a style="color: #fff; margin: 0 10px;" href="iban.html">IBAN Example</a>
+    <a style="color: #fff; margin: 0 10px; text-decoration: none;" href="account.html">Account Number Example</a>
+  </nav>
+  <form style="max-width: 400px; margin: 0 auto;">
+    <div style="max-width: 400px">
+      <!-- IBAN markup -->
+      <div id="iban-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon">
+        <label for="iban">IBAN</label>
+        <div class="secure-field--input-container" style="height: 40px">
+          <div class="secure-field--actions">
+            <span class="secure-field--action secure-field--action__card-icon">
+              <span class="secure-field--action-card-wrap">
+                <img class="secure-field--card-icon secure-field--card-icon__error" src="assets/img/card-error.svg">
+              </span>
+            </span>
+          </div>
+          <div class="secure-field--input" id="iban"></div>
+        </div>
+      </div>
+      <i style="font-size: 0.9rem; margin-top: 10px; display: block;">Example IBAN: DE85123456781234512345</i>
+    </div>
+
+    <div style="max-width: 200px; margin-top: 20px">
+      <button type="button" id="form-submit">
+        Submit
+      </button>
+      <pre id="form-result" style="margin-top: 20px; font-size: 1rem"></pre>
+    </div>
+  </form>
+  <script>
+    var secureFields = new SecureFields();
+
+    secureFields.initTokenize(
+      '1000001115',
+      {
+        iban: {
+          placeholderElementId: "iban",
+          placeholder: "IBAN placeholder",
+          ariaLabel: "IBAN aria label"
+        }
+      },
+      {
+        // options...
+      }
+    );
+
+    secureFields.on('ready', function () {
+      // Set styles manually as they're inside an iframe and out of the scope of the parent's stylesheets
+      secureFields.setStyle('iban', 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0');
+      secureFields.focus('iban');
+    });
+
+    var ibanContainer = document.getElementById('iban-container');
+
+    // Set focus to input fields when clicking containers
+    ibanContainer.addEventListener('click', function () {
+      secureFields.focus('iban');
+    });
+
+    // Set class names on validate
+    secureFields.on('validate', function (data) {
+      if (data.fields.iban.valid) {
+        ibanContainer.classList.remove('secure-field__has-error');
+      } else {
+        ibanContainer.classList.add('secure-field__has-error');
+      }
+    });
+
+    document.getElementById('form-submit').addEventListener('click', function () {
+      var result = document.getElementById('form-result');
+      result.innerText = '';
+      secureFields.submit();
+    });
+
+    secureFields.on('success', function (data) {
+      if (data.transactionId) {
+        var result = document.getElementById('form-result');
+        result.innerText = 'Data submitted successfully (transactionId: ' + data.transactionId + ')';
+        result.style.display = 'block';
+      }
+    });
+  </script>
+  <style>
+    /* The following styles are NOT required */
+    html, body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 0.9rem;
+      line-height: 1.5rem;
+    }
+
+    button {
+      border: none;
+      background-color: #06bd6e;
+      color: white;
+      padding: 7px 12px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</body>
