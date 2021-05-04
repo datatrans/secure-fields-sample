@@ -10,7 +10,11 @@
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "cp src/S* example/src/; cd example; webpack --color --progress --mode production"
+    "test": "npm run lint && npm run build",
+    "build": "NODE_ENV=production webpack --color --progress",
+    "watch": "NODE_ENV=production webpack --color --progress --watch",
+    "lint": "eslint .",
+    "example:start": "parcel serve example/index.html"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,7 +36,15 @@
     "babel-preset-react": "*",
     "babel-preset-stage-0": "*",
     "css-loader": "^2.1.1",
+    "eslint": "^3.11.1",
+    "eslint-import-resolver-webpack": "^0.8.0",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-flowtype": "^2.29.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.1",
+    "eslint-plugin-react": "^6.8.0",
     "file-loader": "^3.0.1",
+    "parcel": "^1.12.4",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-node-externals": "^1.7.2"
