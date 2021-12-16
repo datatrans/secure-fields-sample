@@ -110,16 +110,17 @@
 
     secureFields.on('ready', function () {
       // Set styles manually as they're inside an iframe and out of the scope of the parent's stylesheets
-      secureFields.setStyle('cardNumber', 'font: 16px/18px system-ui, sans-serif; border-radius: 0; border:0; -webkit-appearance: none; padding: 0');
-      secureFields.setStyle('cvv','font: 16px/18px system-ui, sans-serif; border-radius: 0; border:0; -webkit-appearance: none; padding: 0');
+      secureFields.setStyle('cardNumber', 'font: 16px/18px system-ui, sans-serif; border-radius: 0; border:0; -webkit-appearance: none; padding: 0; outline: none');
+      secureFields.setStyle('cvv','font: 16px/18px system-ui, sans-serif; border-radius: 0; border:0; -webkit-appearance: none; padding: 0; outline: none');
       secureFields.focus('cardNumber');
       secureFields.setPlaceholder("cardNumber", "4242 4242 4242 4242");
       secureFields.setPlaceholder("cvv", "123");
     });
 
+    var paymentContainer = document.getElementById('payment-container');
     var cardContainer = document.getElementById('card-number-container');
     var cvvContainer = document.getElementById('cvv-container');
-    var paymentContainer = document.getElementById('payment-container');
+    var expiryInput = document.getElementById('expiry');
 
     // Set focus to input fields when clicking containers
     cardContainer.addEventListener('click', function () {
@@ -129,8 +130,23 @@
       secureFields.focus('cvv');
     });
 
-    // Set class names when fields change
     secureFields.on('change', function (data) {
+      // Fill epxiry date on card autocomplete
+      if (data.event.type === 'autocomplete') {
+        if (data.event.field === 'expiryYear') {
+          var value = (expiryInput.value || '/')
+          expiryInput.value = value.split('/')[0] + '/' + data.event.value.slice(-2)
+          return
+        }
+
+        if (data.event.field === 'expiryMonth') {
+          var value = (expiryInput.value || '/')
+          expiryInput.value = data.event.value + '/' + value.split('/')[1]
+          return
+        }
+      }
+
+      // Set class names when fields change
       var cardImage = cardContainer.querySelector('.secure-field--card-icon__recognized-card');
       paymentContainer.classList.remove('secure-field__has-focus-cvv');
       paymentContainer.classList.remove('secure-field__has-focus-cardNumber');
