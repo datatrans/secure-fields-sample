@@ -135,13 +135,13 @@
       if (data.event.type === 'autocomplete') {
         if (data.event.field === 'expiryYear') {
           var value = (expiryInput.value || '/')
-          expiryInput.value = value.split('/')[0] + '/' + data.event.value.slice(-2)
+          expiryInput.value = value.split('/')[0].trim() + ' / ' + data.event.value.slice(-2)
           return
         }
 
         if (data.event.field === 'expiryMonth') {
           var value = (expiryInput.value || '/')
-          expiryInput.value = data.event.value + '/' + value.split('/')[1]
+          expiryInput.value = data.event.value + ' / ' + value.split('/')[1].trim()
           return
         }
       }
