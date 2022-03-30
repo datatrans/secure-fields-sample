@@ -64,7 +64,7 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
           ? data.fields.cardNumber.paymentMethod
           : false
 
-        setMessage(null)
+        setError(null)
         setCardIcon(paymentMethod ? paymentMethod : 'card-empty')
         setCvvIcon('cvv-empty')
       })
