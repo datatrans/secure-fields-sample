@@ -82,33 +82,8 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
 
       // Show transaction ID on success or transaction error message
       secureFields.on('success', data => {
-        let message = null
         if (data.transactionId) {
           onSuccess(data.transactionId)
-          // message = (
-          //   <>
-          //     <pre>Data submitted successfully with transaction # {data.transactionId}</pre>
-          //     <code style={{ userSelect: 'all' }}>
-          //       <pre className='bg-[#eaeaea] p-2' style={{ maxWidth: '700px' }}>
-          //         curl 'https://api.sandbox.datatrans.com/v1/transactions/{data.transactionId}
-          //         /authorize' \<br />
-          //         --header 'Authorization: Basic {basicAuth}' \<br />
-          //         --header 'Content-Type: application/json' \<br />
-          //         --data-raw '
-          //         {JSON.stringify(
-          //           {
-          //             refno: 'react-secure-fields',
-          //             amount: parseInt(amount, 10),
-          //             autoSettle: true
-          //           },
-          //           null,
-          //           ' '
-          //         )}
-          //         '
-          //       </pre>
-          //     </code>
-          //   </>
-          // )
         } else if (data.error) {
           setError(data.error)
         }
@@ -149,7 +124,7 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
             className='h-[3.1rem] w-10 py-4 border text-center mr-2'
             placeholder='MM'
             value={expm}
-            onChange={setExpm}
+            onChange={e => setExpm(e.target.value)}
           />
           <input
             type='tel'
@@ -157,7 +132,7 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
             className='h-[3.1rem] w-10 py-4 border text-center'
             placeholder='YY'
             value={expy}
-            onChange={setExpy}
+            onChange={e => setExpy(e.target.value)}
           />
         </div>
       </div>
