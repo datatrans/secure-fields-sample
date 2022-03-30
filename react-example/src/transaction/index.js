@@ -1,23 +1,20 @@
 import { useState, useEffect } from 'react'
 
-export function Transaction({ transactionId, setTransactionId }) {
+export function Transaction({ data, setData }) {
   /**
    * THIS CODE IS FOR DEMO PURPOSE ONLY
    * Do not use this code in your project
    * All this should be handled by your server
    */
-  const [basicAuth, setBasicAuth] = useState('')
   const [merchantId, setMerchantId] = useState('')
   const [password, setPassword] = useState('')
-  const [amount, setAmount] = useState(1000)
-
-  const onClick = () => {
-    setLoading(true)
-  }
 
   useEffect(() => {
     if (merchantId && password) {
-      setBasicAuth(window.btoa(`${merchantId}:${password}`))
+      setData({
+        basicAuth: window.btoa(`${merchantId}:${password}`),
+        ...data
+      })
     }
   }, [merchantId, password])
 
@@ -60,7 +57,17 @@ export function Transaction({ transactionId, setTransactionId }) {
         Amount in the currency's smallest unit
         <br />
         (e.g. 1000 = 10CHF)
-        <input id='amount' type='text' value={amount} onChange={e => setAmount(e.target.value)} />
+        <input
+          id='amount'
+          type='text'
+          value={data.amount}
+          onChange={e =>
+            setData({
+              amount: e.target.value,
+              ...data
+            })
+          }
+        />
       </label>
       <h2 className='mt-4'>Step 2:</h2>
       <p>
@@ -75,14 +82,14 @@ export function Transaction({ transactionId, setTransactionId }) {
       <code style={{ userSelect: 'all' }}>
         <pre className='bg-[#eaeaea] p-2' style={{ maxWidth: '700px' }}>
           curl 'https://api.sandbox.datatrans.com/v1/transactions' \<br />
-          --header 'Authorization: Basic {basicAuth}' \<br />
+          --header 'Authorization: Basic {data.basicAuth}' \<br />
           --header 'Content-Type: application/json' \<br />
           --data-raw '
           {JSON.stringify(
             {
               currency: 'CHF',
-              refno: 'react-secure-fields',
-              amount: parseInt(amount, 10)
+              refno: data.refno,
+              amount: parseInt(data.amount, 10)
             },
             null,
             ' '
@@ -101,8 +108,13 @@ export function Transaction({ transactionId, setTransactionId }) {
         <input
           id='transactionId'
           type='text'
-          value={transactionId}
-          onChange={e => setTransactionId(e.target.value)}
+          value={data.transactionId}
+          onChange={e =>
+            setData({
+              transactionId: e.target.value,
+              ...data
+            })
+          }
         />
       </label>
     </>

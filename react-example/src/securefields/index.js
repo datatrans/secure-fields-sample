@@ -7,11 +7,11 @@ const getUrl = production =>
     ? 'https://pay.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js'
     : 'https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js'
 
-export function SecureFields({ basicAuth, transactionId, fields, options, labels, production }) {
+export function SecureFields({ transactionId, fields, options, production, onSuccess }) {
   const [secureFields, setSecureFields] = useState()
   const [expm, setExpm] = useState(12)
   const [expy, setExpy] = useState(25)
-  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
   const [cardIcon, setCardIcon] = useState('card-empty')
   const [cvvIcon, setCvvIcon] = useState('cvv-empty')
 
@@ -84,34 +84,34 @@ export function SecureFields({ basicAuth, transactionId, fields, options, labels
       secureFields.on('success', data => {
         let message = null
         if (data.transactionId) {
-          message = (
-            <>
-              <pre>Data submitted successfully with transaction # {data.transactionId}</pre>
-              <code style={{ userSelect: 'all' }}>
-                <pre className='bg-[#eaeaea] p-2' style={{ maxWidth: '700px' }}>
-                  curl 'https://api.sandbox.datatrans.com/v1/transactions/{data.transactionId}
-                  /authorize' \<br />
-                  --header 'Authorization: Basic {basicAuth}' \<br />
-                  --header 'Content-Type: application/json' \<br />
-                  --data-raw '
-                  {JSON.stringify(
-                    {
-                      refno: 'react-secure-fields',
-                      amount: parseInt(amount, 10),
-                      autoSettle: true
-                    },
-                    null,
-                    ' '
-                  )}
-                  '
-                </pre>
-              </code>
-            </>
-          )
+          onSuccess(data.transactionId)
+          // message = (
+          //   <>
+          //     <pre>Data submitted successfully with transaction # {data.transactionId}</pre>
+          //     <code style={{ userSelect: 'all' }}>
+          //       <pre className='bg-[#eaeaea] p-2' style={{ maxWidth: '700px' }}>
+          //         curl 'https://api.sandbox.datatrans.com/v1/transactions/{data.transactionId}
+          //         /authorize' \<br />
+          //         --header 'Authorization: Basic {basicAuth}' \<br />
+          //         --header 'Content-Type: application/json' \<br />
+          //         --data-raw '
+          //         {JSON.stringify(
+          //           {
+          //             refno: 'react-secure-fields',
+          //             amount: parseInt(amount, 10),
+          //             autoSettle: true
+          //           },
+          //           null,
+          //           ' '
+          //         )}
+          //         '
+          //       </pre>
+          //     </code>
+          //   </>
+          // )
         } else if (data.error) {
-          message = <pre>{data.error}</pre>
+          setError(data.error)
         }
-        setMessage(message)
       })
     }
   }, [secureFields])
@@ -165,7 +165,8 @@ export function SecureFields({ basicAuth, transactionId, fields, options, labels
       <button type='submit' className='bg-[#3eb55f] text-white px-4 py-2'>
         Submit
       </button>
-      {message}
+
+      {error && <pre>{error}</pre>}
     </form>
   )
 }

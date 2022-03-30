@@ -1,20 +1,25 @@
+import { AuthorizeSplit } from './authorize-split'
 import { SecureFields } from './securefields'
 import { Transaction } from './transaction'
 import { useState } from 'react'
 
 export function App() {
-  const [transactionId, setTransactionId] = useState()
+  const [data, setData] = useState({
+    amount: 1000,
+    refno: 'react-secure-fields',
+    basicAuth: '{{basicAuth}}'
+  })
+
+  const [success, setSuccess] = useState()
   const styles = {}
 
   return (
     <div className='container mx-auto py-4'>
       <h1>Datatrans SecureFields Demo</h1>
-      {!transactionId && (
-        <Transaction transactionId={transactionId} setTransactionId={setTransactionId} />
-      )}
-      {transactionId && (
+      {!data.transactionId && <Transaction data={data} setData={setData} />}
+      {data.transactionId && (
         <SecureFields
-          transactionId={transactionId}
+          transactionId={data.transactionId}
           fields={{
             cardNumber: {
               placeholderElementId: 'cardNumberPlaceholder',
@@ -29,8 +34,10 @@ export function App() {
             }
           }}
           options={{ styles }}
+          onSuccess={setSuccess}
         />
       )}
+      {success && <AuthorizeSplit transactionId={success} data={data} />}
     </div>
   )
 }
