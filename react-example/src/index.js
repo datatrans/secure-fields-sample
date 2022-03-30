@@ -1,3 +1,5 @@
-import SecureFields from './SecureFields'
+import ReactDOM from "react-dom";
+import { App } from "./app";
 
-export default SecureFields
+const app = document.getElementById("app");
+ReactDOM.render(<App />, app);
