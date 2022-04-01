@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export function AuthorizeSplit({ transactionId, data }) {
+export function AuthorizeSplit({ transactionId, data, setData }) {
   /**
    * THIS CODE IS FOR DEMO PURPOSE ONLY
    * Do not use this code in your project
@@ -8,7 +8,7 @@ export function AuthorizeSplit({ transactionId, data }) {
    */
   return (
     <>
-      <p className='mt-4'>Data submitted successfully with transaction # {data.transactionId}</p>
+      <p className='mt-4'>Data submitted successfully with transaction # {transactionId}</p>
       <h2 className='mt-4'>Step 4:</h2>
       <p>
         <small>
@@ -35,6 +35,23 @@ export function AuthorizeSplit({ transactionId, data }) {
           '
         </pre>
       </code>
+      <p className='bg-orange-300 p-2 mt-4'>
+        Add a <strong>new</strong> transactionId to restart the example
+      </p>
+      <label htmlFor='transactionId'>
+        Transaction ID
+        <input
+          id='transactionId'
+          type='text'
+          value={data.transactionId}
+          onChange={e =>
+            setData({
+              ...data,
+              transactionId: e.target.value
+            })
+          }
+        />
+      </label>
     </>
   )
 }

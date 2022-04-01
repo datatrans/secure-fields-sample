@@ -28,7 +28,7 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
           secureFields.destroy()
           setSecureFields(null)
         } catch (err) {
-          alert('err', err)
+          alert('Unmount error', err)
         } // eslint-disable-line no-empty
       }, 1)
     }

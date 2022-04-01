@@ -12,8 +12,8 @@ export function Transaction({ data, setData }) {
   useEffect(() => {
     if (merchantId && password) {
       setData({
-        basicAuth: window.btoa(`${merchantId}:${password}`),
-        ...data
+        ...data,
+        basicAuth: window.btoa(`${merchantId}:${password}`)
       })
     }
   }, [merchantId, password])
@@ -47,7 +47,7 @@ export function Transaction({ data, setData }) {
         Password
         <input
           id='password'
-          type='password'
+          type='text'
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
@@ -63,8 +63,8 @@ export function Transaction({ data, setData }) {
           value={data.amount}
           onChange={e =>
             setData({
-              amount: e.target.value,
-              ...data
+              ...data,
+              amount: e.target.value
             })
           }
         />
@@ -97,26 +97,6 @@ export function Transaction({ data, setData }) {
           '
         </pre>
       </code>
-      <h2 className='mt-4'>Step 3:</h2>
-      <p>
-        Copy the transactionId from the call above:
-        <br />
-        Please note that a transactionId is only valid for 30 minutes.
-      </p>
-      <label htmlFor='transactionId'>
-        Transaction ID
-        <input
-          id='transactionId'
-          type='text'
-          value={data.transactionId}
-          onChange={e =>
-            setData({
-              transactionId: e.target.value,
-              ...data
-            })
-          }
-        />
-      </label>
     </>
   )
 }

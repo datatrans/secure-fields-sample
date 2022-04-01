@@ -16,7 +16,9 @@ export function App() {
   return (
     <div className='container mx-auto py-4'>
       <h1>Datatrans SecureFields Demo</h1>
-      {!data.transactionId && <Transaction data={data} setData={setData} />}
+
+      {!data.transactionId && !success && <Transaction data={data} setData={setData} />}
+
       {data.transactionId && (
         <SecureFields
           transactionId={data.transactionId}
@@ -34,10 +36,17 @@ export function App() {
             }
           }}
           options={{ styles }}
-          onSuccess={setSuccess}
+          onSuccess={id => {
+            setData({
+              ...data,
+              transactionId: ''
+            })
+            setSuccess(id)
+          }}
         />
       )}
-      {success && <AuthorizeSplit transactionId={success} data={data} />}
+
+      {success && <AuthorizeSplit transactionId={success} data={data} setData={setData} />}
     </div>
   )
 }
