@@ -11,11 +11,40 @@ export function App() {
   })
 
   const [success, setSuccess] = useState()
+  const [transactionId, setTransactionId] = useState('')
   const styles = {}
 
   return (
     <div className='container mx-auto py-4'>
       <h1>Datatrans SecureFields Demo</h1>
+
+      <div className='flex items-end mb-4'>
+        <label htmlFor='transactionId'>
+          Transaction ID
+          <input
+            id='transactionId'
+            type='tel'
+            value={transactionId}
+            className='block h-9 border'
+            onChange={e => {
+              setTransactionId(e.target.value)
+              setData({
+                ...data,
+                transactionId: false
+              })
+              setSuccess(false)
+            }}
+          />
+        </label>
+        <div>
+          <button className='bg-[#3eb55f] text-white ml-2 px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md' onClick={e =>
+            setData({
+              ...data,
+              transactionId
+            })
+          }>Load SecureFields</button>
+        </div>
+      </div>
 
       {!data.transactionId && !success && <Transaction data={data} setData={setData} />}
 
@@ -36,6 +65,11 @@ export function App() {
             }
           }}
           options={{ styles }}
+          onReady={() => {}}
+          onValidate={() => {}}
+          onClear={() => {}}
+          onChange={() => {}}
+          onError={() => {}}
           onSuccess={id => {
             setData({
               ...data,

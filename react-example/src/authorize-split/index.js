@@ -8,7 +8,7 @@ export function AuthorizeSplit({ transactionId, data, setData }) {
    */
   return (
     <>
-      <p className='mt-4'>Data submitted successfully with transaction # {transactionId}</p>
+      <p className='mt-4 text-[#3eb55f]'>Data submitted successfully with transaction # {transactionId}</p>
       <h2 className='mt-4'>Step 4:</h2>
       <p>
         <small>
@@ -38,20 +38,6 @@ export function AuthorizeSplit({ transactionId, data, setData }) {
       <p className='bg-orange-300 p-2 mt-4'>
         Add a <strong>new</strong> transactionId to restart the example
       </p>
-      <label htmlFor='transactionId'>
-        Transaction ID
-        <input
-          id='transactionId'
-          type='text'
-          value={data.transactionId}
-          onChange={e =>
-            setData({
-              ...data,
-              transactionId: e.target.value
-            })
-          }
-        />
-      </label>
     </>
   )
 }

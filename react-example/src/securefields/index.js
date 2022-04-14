@@ -7,13 +7,25 @@ const getUrl = production =>
     ? 'https://pay.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js'
     : 'https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js'
 
-export function SecureFields({ transactionId, fields, options, production, onSuccess }) {
+export function SecureFields({
+  transactionId,
+  fields,
+  options,
+  production,
+  onSuccess,
+  onReady,
+  onValidate,
+  onClear,
+  onChange,
+  onError
+}) {
   const [secureFields, setSecureFields] = useState()
   const [expm, setExpm] = useState(12)
   const [expy, setExpy] = useState(25)
   const [error, setError] = useState('')
   const [cardIcon, setCardIcon] = useState('card-empty')
   const [cvvIcon, setCvvIcon] = useState('cvv-empty')
+  const [isLoading, setIsLoading] = useState(true)
 
   const initSecureFields = () => {
     const initalizedSecureFields = new window.SecureFields()
@@ -58,6 +70,12 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
 
   useEffect(() => {
     if (secureFields) {
+      secureFields.on('ready', () => {
+        onReady()
+        setIsLoading(false)
+      })
+      secureFields.on('clear', onClear)
+
       // Set class names and icon when fields change
       secureFields.on('change', data => {
         let paymentMethod = data.fields.cardNumber.paymentMethod
@@ -67,6 +85,7 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
         setError(null)
         setCardIcon(paymentMethod ? paymentMethod : 'card-empty')
         setCvvIcon('cvv-empty')
+        onChange(data)
       })
 
       // Set error icon and class name on validate failure
@@ -78,6 +97,14 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
         if (!data.fields.cvv.valid) {
           setCvvIcon('cvv-error')
         }
+        onValidate(data)
+      })
+
+      secureFields.on('error', data => {
+        console.error(data)
+        setError(data)
+        onError(data)
+        setIsLoading(false)
       })
 
       // Show transaction ID on success or transaction error message
@@ -86,6 +113,7 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
           onSuccess(data.transactionId)
         } else if (data.error) {
           setError(data.error)
+          onError(data)
         }
       })
     }
@@ -136,12 +164,40 @@ export function SecureFields({ transactionId, fields, options, production, onSuc
           />
         </div>
       </div>
-
-      <button type='submit' className='bg-[#3eb55f] text-white px-4 py-2'>
+      <button
+        type='submit'
+        className={`bg-[#3eb55f] text-white inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md transition ease-in-out duration-150 cursor-not-allowed ${
+          error && 'opacity-25'
+        }`}
+        disabled={isLoading || error}>
+        {isLoading && (
+          <svg
+            className='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'>
+            <circle
+              className='opacity-25'
+              cx='12'
+              cy='12'
+              r='10'
+              stroke='currentColor'
+              strokeWidth='4'></circle>
+            <path
+              className='opacity-75'
+              fill='currentColor'
+              d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'></path>
+          </svg>
+        )}
         Submit
       </button>
 
-      {error && <pre>{error}</pre>}
+      {error && (
+        <div className='bg-red-400 p-2 mt-4 text-white'>
+          <b>{error}</b>
+          <p>Please check your transactionId and your setup</p>
+        </div>
+      )}
     </form>
   )
 }

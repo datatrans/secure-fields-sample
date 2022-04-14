@@ -21,7 +21,7 @@ export function Transaction({ data, setData }) {
   return (
     <>
       <p className='bg-orange-300 p-2'>
-        If you already have a transactionId, please head to Step 3 directly.
+        Follow belows step to get a new transactionId
       </p>
       <h2 className='mt-4'>Step 1:</h2>
       <p>
