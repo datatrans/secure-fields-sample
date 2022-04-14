@@ -4,7 +4,7 @@ This project contains sample code for implementing a visually pleasing credit ca
 
 This component is using the [Datatrans Payment JSON API](https://api-reference.datatrans.ch/#tag/v1transactions)..
 
-If you're a PCI-Proxy customer, please refer to our old examples and the [PCI-Proxy Documentation](https://docs.pci-proxy.com/collect/secure-fields-js) .
+If you're a PCI Proxy customer, please refer to our old examples and the [PCI Proxy Documentation](https://docs.pci-proxy.com/collect/secure-fields-js) .
 
 ## Usage
 
