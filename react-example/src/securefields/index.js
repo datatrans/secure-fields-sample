@@ -109,6 +109,7 @@ export function SecureFields({
 
       // Show transaction ID on success or transaction error message
       secureFields.on('success', data => {
+        console.log(data)
         if (data.transactionId) {
           onSuccess(data.transactionId)
         } else if (data.error) {
@@ -193,10 +194,9 @@ export function SecureFields({
       </button>
 
       {error && (
-        <div className='bg-red-400 p-2 mt-4 text-white'>
-          <b>{error}</b>
-          <p>Please check your transactionId and your setup</p>
-        </div>
+        <p className='bg-red-400 p-2 mt-4 text-white'>
+          {error}
+        </p>
       )}
     </form>
   )

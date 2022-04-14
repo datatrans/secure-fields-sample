@@ -37,12 +37,14 @@ export function App() {
           />
         </label>
         <div>
-          <button className='bg-[#3eb55f] text-white ml-2 px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md' onClick={e =>
+          <button className='bg-[#3eb55f] text-white ml-2 px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md' onClick={e =>{
             setData({
               ...data,
               transactionId
             })
-          }>Load SecureFields</button>
+
+            setSuccess(false)
+          }}>Load SecureFields</button>
         </div>
       </div>
 
