@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>PCI Proxy Web Tokenization</title>
+  <script src="https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../assets/css/stylesheet.css">
+</head>
+<body style="margin: 0;">
+  <nav style="text-align: center; background: #213d62; padding: 10px; margin-bottom: 40px;">
+    <a href="index.html">Basic Example</a>
+    <a href="inline-example.html">Inline Example</a>
+    <a style="text-decoration: underline;" href="floating-label.html">Floating Label Example</a>
+    <a href="iban.html">IBAN Example</a>
+    <a href="account.html">Account Number Example</a>
+  </nav>
+  <form style="max-width: 400px; margin: 0 auto;">
+    <div style="max-width: 400px">
+      <!-- Card Number markup -->
+      <div id="card-number-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon">
+        <label for="card-number">Card Number</label>
+        <div class="secure-field--input-container" style="height: 50px">
+          <div class="secure-field--input" id="card-number"></div>
+          <div class="secure-field--actions">
+            <span class="secure-field--action secure-field--action__card-icon">
+              <span class="secure-field--action-card-wrap">
+                <img class="secure-field--card-icon secure-field--card-icon__empty" src="../assets/img/card-empty.svg">
+                <img class="secure-field--card-icon secure-field--card-icon__error" src="../assets/img/card-error.svg">
+                <img class="secure-field--card-icon secure-field--card-icon__recognized-card" src="../assets/img/card-recognized.svg">
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width: 150px; margin-top: 20px">
+      <!-- CVV markup -->
+      <div id="cvv-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon">
+        <label for="cvv-number">CVV</label>
+        <div class="secure-field--input-container" style="height: 50px">
+          <div class="secure-field--input" id="cvv-number"></div>
+          <div class="secure-field--actions">
+            <span class="secure-field--action secure-field--action__card-icon">
+              <span class="secure-field--action-card-wrap">
+                <img class="secure-field--card-icon secure-field--card-icon__empty" src="../assets/img/cvc-empty.svg">
+                <img class="secure-field--card-icon secure-field--card-icon__error" src="../assets/img/cvc-error.svg">
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width: 200px; margin-top: 20px">
+      <button type="button" id="form-submit">
+        Submit
+      </button>
+      <pre id="form-result" style="margin-top: 20px; font-size: 1rem"></pre>
+    </div>
+  </form>
+  <script>
+    var secureFields = new SecureFields();
+
+    secureFields.initTokenize(
+      '1100007006',
+      {
+        cardNumber: {
+           placeholderElementId: 'card-number',
+           inputType: 'tel'
+        },
+        cvv: {
+           placeholderElementId: 'cvv-number',
+           inputType: 'tel'
+        }
+      },
+      {
+        // options...
+      }
+    );
+
+    secureFields.on('ready', function () {
+      // Set styles manually as they're inside an iframe and out of the scope of the parent's stylesheets
+      secureFields.setStyle('cardNumber', 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0');
+      secureFields.setStyle('cvv','font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0');
+      secureFields.focus('cardNumber');
+    });
+
+    var cardContainer = document.getElementById('card-number-container');
+    var cvvContainer = document.getElementById('cvv-container');
+
+    // Set focus to input fields when clicking containers
+    cardContainer.addEventListener('click', function () {
+      secureFields.focus('cardNumber');
+    });
+    cvvContainer.addEventListener('click', function () {
+      secureFields.focus('cvv');
+    });
+
+    // Set class names when fields change
+    secureFields.on('change', function (data) {
+      /* FLOATING LABEL */
+      if (data.event.type === 'focus') {
+        if (data.event.field === 'cardNumber') {
+          cardContainer.classList.add('has-focus');
+        } else {
+          cvvContainer.classList.add('has-focus');
+        }
+      }
+      if (data.event.type === 'blur') {
+        cardContainer.classList.remove('has-focus');
+        cvvContainer.classList.remove('has-focus');
+
+        if (data.fields.cardNumber.length) {
+          cardContainer.classList.add('is-filled');
+        } else {
+          cardContainer.classList.remove('is-filled');
+        }
+
+        if (data.fields.cvv.length) {
+          cvvContainer.classList.add('is-filled');
+        } else {
+          cvvContainer.classList.remove('is-filled');
+        }
+      }
+      /* FLOATING LABEL END */
+
+      var cardImage = cardContainer.querySelector('.secure-field--card-icon__recognized-card');
+      cardContainer.classList.remove('secure-field__has-error');
+      cvvContainer.classList.remove('secure-field__has-error');
+
+      if (!data.fields.cardNumber.paymentMethod) {
+        cardImage.src = 'assets/img/card-empty.svg';
+        cardContainer.classList.remove('secure-field__is-recognized');
+      } else {
+        cardImage.src = 'assets/img/brands/' + data.fields.cardNumber.paymentMethod + '.svg';
+        cardContainer.classList.add('secure-field__is-recognized');
+      }
+    })
+
+    // Set class names on validate
+    secureFields.on('validate', function (data) {
+      if (data.fields.cardNumber.valid) {
+        cardContainer.classList.remove('secure-field__has-error');
+      } else {
+        cardContainer.classList.remove('secure-field__is-recognized');
+        cardContainer.classList.add('secure-field__has-error');
+      }
+
+      if (data.fields.cvv.valid) {
+        cvvContainer.classList.remove('secure-field__has-error');
+      } else {
+        cvvContainer.classList.add('secure-field__has-error');
+      }
+    });
+
+    document.getElementById('form-submit').addEventListener('click', function () {
+      secureFields.submit();
+    });
+
+    secureFields.on('success', function (data) {
+      if (data.transactionId) {
+        var result = document.getElementById('form-result');
+        result.innerText = 'Data submitted successfully (transactionId: ' + data.transactionId + ')';
+        result.style.display = 'block';
+      }
+    });
+  </script>
+  <style>
+    /* The following styles are NOT required */
+    html, body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 0.9rem;
+      line-height: 1.5rem;
+    }
+
+    button {
+      border: none;
+      background-color: #06bd6e;
+      color: white;
+      padding: 7px 12px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* FLOATING LABEL */
+    .secure-field__base {
+      position: relative;
+    }
+    .secure-field.secure-field__base.secure-field__input .secure-field--input {
+      padding-top: 20px;
+      padding-bottom: 3px;
+    }
+    label {
+      position: absolute;
+      z-index: 100;
+      top: 14px;
+      left: 17px;
+    }
+    .has-focus label,
+    .is-filled label {
+      transform: scale(0.75);
+      top: 2px;
+      left: 4px;
+    }
+    #cvv-container.has-focus label,
+    #cvv-container.is-filled label {
+      left: 12px;
+    }
+  </style>
+</body>

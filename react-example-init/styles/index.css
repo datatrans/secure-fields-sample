@@ -8,10 +8,14 @@ h1 {
 }
 
 h2 {
-  @apply text-3xl;
+  @apply text-2xl;
   @apply font-semibold;
 }
 
+h3 {
+  @apply text-xl;
+  @apply font-semibold;
+}
 [type='text'],
 [type='password'] {
   @apply px-2 py-1 w-full border rounded-sm outline-none focus:outline-none appearance-none;

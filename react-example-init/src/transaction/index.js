@@ -20,10 +20,11 @@ export function Transaction({ data, setData }) {
 
   return (
     <>
-      <p className='bg-orange-300 p-2'>
+    <hr className='mt-8' />
+      <h2 className='mt-8'>
         Follow belows step to get a new transactionId
-      </p>
-      <h2 className='mt-4'>Step 1:</h2>
+      </h2>
+      <h3 className='mt-4'>Step 1:</h3>
       <p>
         Fill in your basicAuth to complete the code example below:
         <br />
@@ -40,6 +41,7 @@ export function Transaction({ data, setData }) {
           id='merchantId'
           type='text'
           value={merchantId}
+          className='mb-2'
           onChange={e => setMerchantId(e.target.value)}
         />
       </label>
@@ -49,18 +51,18 @@ export function Transaction({ data, setData }) {
           id='password'
           type='text'
           value={password}
+          className='mb-2'
           onChange={e => setPassword(e.target.value)}
         />
       </label>
 
       <label htmlFor='amount'>
-        Amount in the currency's smallest unit
-        <br />
-        (e.g. 1000 = 10CHF)
+        Amount in the currency's smallest unit (e.g. 1000 = 10CHF)
         <input
           id='amount'
           type='text'
           value={data.amount}
+          className='mb-2'
           onChange={e =>
             setData({
               ...data,
@@ -68,8 +70,9 @@ export function Transaction({ data, setData }) {
             })
           }
         />
+        <small>Set the amount to 0 for card registeration only</small>
       </label>
-      <h2 className='mt-4'>Step 2:</h2>
+      <h3 className='mt-4'>Step 2:</h3>
       <p>
         Run this example on your server:
         <br />
@@ -81,15 +84,15 @@ export function Transaction({ data, setData }) {
       </p>
       <code style={{ userSelect: 'all' }}>
         <pre className='bg-[#eaeaea] p-2' style={{ maxWidth: '700px' }}>
-          curl 'https://api.sandbox.datatrans.com/v1/transactions' \<br />
+          curl 'https://api.sandbox.datatrans.com/v1/transactions/secureFields' \<br />
           --header 'Authorization: Basic {data.basicAuth}' \<br />
           --header 'Content-Type: application/json' \<br />
           --data-raw '
           {JSON.stringify(
             {
               currency: 'CHF',
-              refno: data.refno,
-              amount: parseInt(data.amount, 10)
+              amount: parseInt(data.amount, 10) ? parseInt(data.amount, 10) : undefined,
+              returnUrl: window.location.href
             },
             null,
             ' '

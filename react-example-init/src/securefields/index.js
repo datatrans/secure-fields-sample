@@ -22,7 +22,7 @@ export function SecureFields({
   const [secureFields, setSecureFields] = useState()
   const [expm, setExpm] = useState(12)
   const [expy, setExpy] = useState(25)
-  const [error, setError] = useState('')
+  const [error, setError] = useState()
   const [cardIcon, setCardIcon] = useState('card-empty')
   const [cvvIcon, setCvvIcon] = useState('cvv-empty')
   const [isLoading, setIsLoading] = useState(true)
@@ -146,29 +146,32 @@ export function SecureFields({
           callback={() => secureFields.focus(fields.cvv.placeholderElementId)}>
           <Icon fieldType={fields.cvv.placeholderElementId} iconType={cvvIcon} />
         </Field>
-        <div className='flex items-end pb-2 pl-2'>
-          <input
-            type='tel'
-            maxLength={2}
-            className='h-[3.1rem] w-10 py-4 border text-center mr-2'
-            placeholder='MM'
-            value={expm}
-            onChange={e => setExpm(e.target.value)}
-          />
-          <input
-            type='tel'
-            maxLength={2}
-            className='h-[3.1rem] w-10 py-4 border text-center'
-            placeholder='YY'
-            value={expy}
-            onChange={e => setExpy(e.target.value)}
-          />
+        <div className='pb-2 pl-2'>
+          <label>Expiry Date</label>
+          <div className='flex items-end'>
+            <input
+              type='tel'
+              maxLength={2}
+              className='h-[3.1rem] w-10 py-4 border text-center mr-2'
+              placeholder='MM'
+              value={expm}
+              onChange={e => setExpm(e.target.value)}
+            />
+            <input
+              type='tel'
+              maxLength={2}
+              className='h-[3.1rem] w-10 py-4 border text-center'
+              placeholder='YY'
+              value={expy}
+              onChange={e => setExpy(e.target.value)}
+            />
+          </div>
         </div>
       </div>
       <button
         type='submit'
-        className={`bg-[#3eb55f] text-white inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md transition ease-in-out duration-150 cursor-not-allowed ${
-          error && 'opacity-25'
+        className={`bg-[#3eb55f] text-white inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md transition ease-in-out duration-150 ${
+          error && 'cursor-not-allowed opacity-25'
         }`}
         disabled={isLoading || error}>
         {isLoading && (
@@ -193,11 +196,7 @@ export function SecureFields({
         Submit
       </button>
 
-      {error && (
-        <p className='bg-red-400 p-2 mt-4 text-white'>
-          {error}
-        </p>
-      )}
+      {error && <p className='bg-red-400 p-2 mt-4 text-white'>{error}</p>}
     </form>
   )
 }

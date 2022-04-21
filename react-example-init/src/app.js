@@ -16,7 +16,7 @@ export function App() {
 
   return (
     <div className='container mx-auto py-4'>
-      <h1>Datatrans SecureFields Demo</h1>
+      <h1 className='mb-4'>Datatrans SecureFields Demo</h1>
 
       <div className='flex items-end mb-4'>
         <label htmlFor='transactionId'>
@@ -25,7 +25,7 @@ export function App() {
             id='transactionId'
             type='tel'
             value={transactionId}
-            className='block h-9 border'
+            className='block h-9 border px-2'
             onChange={e => {
               setTransactionId(e.target.value)
               setData({
