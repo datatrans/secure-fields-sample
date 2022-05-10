@@ -129,10 +129,10 @@
       cvvContainer.classList.remove('secure-field__has-error');
 
       if (!data.fields.cardNumber.paymentMethod) {
-        cardImage.src = 'assets/img/card-empty.svg';
+        cardImage.src = '../assets/img/card-empty.svg';
         cardContainer.classList.remove('secure-field__is-recognized');
       } else {
-        cardImage.src = 'assets/img/brands/' + data.fields.cardNumber.paymentMethod + '.svg';
+        cardImage.src = '../assets/img/brands/' + data.fields.cardNumber.paymentMethod + '.svg';
         cardContainer.classList.add('secure-field__is-recognized');
       }
     })

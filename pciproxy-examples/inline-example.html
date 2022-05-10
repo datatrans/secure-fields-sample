@@ -70,6 +70,9 @@
           } else {
             this.value = '';
           }
+          if (this.oldSelectionEnd === 7 && key === 'keyup' && e.key.match(/^[0-9]$/)) {
+            secureFields.focus('cvv');
+          }
         });
       });
     }
@@ -157,11 +160,14 @@
       paymentContainer.classList.add(`secure-field__has-focus-${data.event.field}`);
 
       if (!data.fields.cardNumber.paymentMethod) {
-        cardImage.src = 'assets/img/card-empty.svg';
+        cardImage.src = '../assets/img/card-empty.svg';
         cardContainer.classList.remove('secure-field__is-recognized');
       } else {
-        cardImage.src = 'assets/img/brands/' + data.fields.cardNumber.paymentMethod + '.svg';
+        cardImage.src = '../assets/img/brands/' + data.fields.cardNumber.paymentMethod + '.svg';
         cardContainer.classList.add('secure-field__is-recognized');
+      }
+      if (data.event.type === 'keyUp' && data.event.field === 'cardNumber' && data.event.eventData.isNumber && data.fields.cardNumber.valid) {
+        document.getElementById('expiry').focus();
       }
     })
 
