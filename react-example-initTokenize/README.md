@@ -5,6 +5,8 @@ with [PCI Proxy](https://www.pci-proxy.com/) with [ReactJS](https://reactjs.org/
 
 Further information can be found in the [PCI Proxy Documentation](https://docs.pci-proxy.com/collect-and-store-cards/capture-iframes).
 
+**Note**: If you are not a PCI Proxy customer, check out our other [offizial Secure Fields examples](https://github.com/datatrans/secure-fields-sample/tree/master/react-example-init)
+
 ## Usage
 
 Visit the [online demo](https://datatrans.github.io/secure-fields-sample/pciproxy-examples) or clone this repository.
@@ -21,5 +23,4 @@ Install all dependencies
 
 ### `npm start`
 
-A working bundle will be created
-Open example/lib/app.html in your browser
+Server running at http://localhost:1234

@@ -16,7 +16,7 @@ export function App() {
 
   return (
     <div className='container mx-auto py-4'>
-      <h1 className='mb-4'>Datatrans SecureFields Demo</h1>
+      <h1 className='mb-4'>Datatrans Secure Fields Demo</h1>
 
       <div className='flex items-end mb-4'>
         <label htmlFor='transactionId'>

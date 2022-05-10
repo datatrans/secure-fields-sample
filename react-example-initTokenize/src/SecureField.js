@@ -1,32 +1,17 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 
-class SecureField extends Component {
-  render() {
-    const { fieldType, label, customClass, callback, children } = this.props
-
-    return <div id={fieldType + '-number-container'} className={customClass} onClick={() => callback()}>
-      <label htmlFor={fieldType + '-number'}>{label}</label>
-      <div className="secure-field--input-container" style={{height: '40px'}}>
-        <div className="secure-field--input" id={fieldType + '-number'}></div>
-        <div className="secure-field--actions">
-          <span className={'secure-field--action secure-field--action__' + fieldType + '-icon'}>
-            <span className={'secure-field--action-' + fieldType + '-wrap'}>
-              {children}
-            </span>
+export default function SecureField({ fieldType, label, customClass, callback, children }) {
+  return <div id={fieldType + '-number-container'} className={customClass} onClick={() => callback()}>
+    <label htmlFor={fieldType + '-number'}>{label}</label>
+    <div className="secure-field--input-container" style={{height: '40px'}}>
+      <div className="secure-field--input" id={fieldType + '-number'}></div>
+      <div className="secure-field--actions">
+        <span className={'secure-field--action secure-field--action__' + fieldType + '-icon'}>
+          <span className={'secure-field--action-' + fieldType + '-wrap'}>
+            {children}
           </span>
-        </div>
+        </span>
       </div>
     </div>
-  }
+  </div>
 }
-
-SecureField.propTypes = {
-  fieldType: PropTypes.string,
-  label: PropTypes.string,
-  customClass: PropTypes.string,
-  callback: PropTypes.func,
-  children: PropTypes.array
-}
-
-export default SecureField
