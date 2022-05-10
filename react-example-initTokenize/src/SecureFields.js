@@ -141,7 +141,10 @@ export default function SecureFields({ production, config }) {
   }, [secureFields])
 
 
-  return <form onSubmit={() => secureFields.submit()}>
+  return <form onSubmit={e => {
+    e.preventDefault()
+    secureFields.submit()
+  }}>
     <div style={{maxWidth: '400px'}}>
       {/* <!-- Card Number markup --> */}
       <SecureField
@@ -163,7 +166,7 @@ export default function SecureFields({ production, config }) {
       </SecureField>
     </div>
     <div style={{maxWidth: '400px', marginTop: '20px'}}>
-      <button type="button" id="form-submit" onClick={() => secureFields.submit()}>
+      <button type="submit" id="form-submit">
           Submit
       </button>
       {message}
