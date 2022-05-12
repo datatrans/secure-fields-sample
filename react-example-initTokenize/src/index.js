@@ -16,5 +16,4 @@ ReactDOM.render(<SecureFields config={{
     }
   },
   options: {}
-}} />, document.getElementById('root'))
-
+}} />, document.getElementById('app'))

@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1 {
+  @apply text-4xl;
+  @apply font-semibold;
+}
+
+h2 {
+  @apply text-2xl;
+  @apply font-semibold;
+}
+
+h3 {
+  @apply text-xl;
+  @apply font-semibold;
+}
+[type='text'],
+[type='password'] {
+  @apply px-2 py-1 w-full border rounded-sm outline-none focus:outline-none appearance-none;
+}
+
+a {
+  @apply text-[#3eb55f];
+}
