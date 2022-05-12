@@ -20,13 +20,11 @@ export function Transaction({ data, setData }) {
 
   return (
     <>
-    <hr className='mt-8' />
       <h2 className='mt-8'>
-        Follow belows step to get a new transactionId
+        How to get a Transaction ID?
       </h2>
-      <h3 className='mt-4'>Step 1:</h3>
-      <p>
-        Fill in your basicAuth to complete the code example below:
+      <p className='mt-4 mb-4'>
+        Provide your authentication data to complete the example request below.
         <br />
         <small>
           <a href='https://api-reference.datatrans.ch/#section/Authentication'>
@@ -35,55 +33,48 @@ export function Transaction({ data, setData }) {
         </small>
       </p>
 
-      <label htmlFor='merchantId'>
-        Datatrans MerchantId
+      <label htmlFor='merchantId' className='block'>
+        <strong className='block'>Datatrans Merchant ID</strong>
         <input
           id='merchantId'
           type='text'
           value={merchantId}
-          className='mb-2'
+          className='max-w-md'
           onChange={e => setMerchantId(e.target.value)}
         />
       </label>
-      <label htmlFor='password'>
-        Password
+      <label htmlFor='password' className='block mt-3'>
+        <strong className='block'>Password</strong>
         <input
           id='password'
           type='text'
           value={password}
-          className='mb-2'
+          className='max-w-md'
           onChange={e => setPassword(e.target.value)}
         />
       </label>
 
-      <label htmlFor='amount'>
-        Amount in the currency's smallest unit (e.g. 1000 = 10CHF)
+      <label htmlFor='amount' className='block mt-3'>
+        <strong className='block'>Amount in the currency's smallest unit (e.g. 100 = 1CHF)</strong>
         <input
           id='amount'
           type='text'
+          className='max-w-xs'
           value={data.amount}
-          className='mb-2'
           onChange={e =>
             setData({
               ...data,
               amount: e.target.value
             })
           }
-        />
-        <small>Set the amount to 0 for card registeration only</small>
-      </label>
-      <h3 className='mt-4'>Step 2:</h3>
-      <p>
-        Run this example on your server:
-        <br />
-        <small>
-          <a href='https://api-reference.datatrans.ch/#tag/v1transactions'>
-            Documentation: Initialize a transaction
-          </a>
+          />
+        <small className='text-slate-400 block mt-2'>
+          Set the amount to 0 if you need to register a new credit card without performing a transaction at the same time.
         </small>
-      </p>
+      </label>
+      <h3 className='mt-8 mb-4'>Send the following request from your server:</h3>
       <code style={{ userSelect: 'all' }}>
-        <pre className='bg-[#eaeaea] p-2' style={{ maxWidth: '700px' }}>
+        <pre className='bg-[#eaeaea] p-2 text-sm max-w-3xl'>
           curl 'https://api.sandbox.datatrans.com/v1/transactions/secureFields' \<br />
           --header 'Authorization: Basic {data.basicAuth}' \<br />
           --header 'Content-Type: application/json' \<br />
@@ -100,6 +91,13 @@ export function Transaction({ data, setData }) {
           '
         </pre>
       </code>
+      <p>
+        <small>
+          <a href='https://api-reference.datatrans.ch/#tag/v1transactions'>
+            Documentation: Initialize a transaction
+          </a>
+        </small>
+      </p>
     </>
   )
 }

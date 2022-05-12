@@ -20,8 +20,8 @@ export function SecureFields({
   onError
 }) {
   const [secureFields, setSecureFields] = useState()
-  const [expm, setExpm] = useState(12)
-  const [expy, setExpy] = useState(25)
+  const [expm, setExpm] = useState()
+  const [expy, setExpy] = useState()
   const [error, setError] = useState()
   const [cardIcon, setCardIcon] = useState('card-empty')
   const [cvvIcon, setCvvIcon] = useState('cvv-empty')
@@ -170,7 +170,7 @@ export function SecureFields({
       </div>
       <button
         type='submit'
-        className={`bg-[#3eb55f] text-white inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md transition ease-in-out duration-150 ${
+        className={`bg-[#3eb55f] text-white mt-2 px-4 py-1 font-semibold leading-6 text-sm transition ease-in-out duration-150 ${
           error && 'cursor-not-allowed opacity-25'
         }`}
         disabled={isLoading || error}>

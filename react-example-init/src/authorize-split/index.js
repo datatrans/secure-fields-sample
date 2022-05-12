@@ -13,7 +13,7 @@ export function AuthorizeSplit({ transactionId, data, setData }) {
       </p>
       {!!parseInt(data.amount, 10) && (
         <>
-          <h2 className='mt-4'>Step 4:</h2>
+          <h2 className='mt-4'>Authorize transaction</h2>
           <p>
             <small>
               <a href='https://api-reference.datatrans.ch/#operation/authorize-split'>
@@ -22,7 +22,7 @@ export function AuthorizeSplit({ transactionId, data, setData }) {
             </small>
           </p>
           <code style={{ userSelect: 'all' }}>
-            <pre className='bg-[#eaeaea] p-2' style={{ maxWidth: '700px' }}>
+            <pre className='bg-[#eaeaea] p-2 max-w-3xl text-sm'>
               curl 'https://api.sandbox.datatrans.com/v1/transactions/{transactionId}/authorize' \
               <br />
               --header 'Authorization: Basic {data.basicAuth}' \<br />
@@ -42,9 +42,11 @@ export function AuthorizeSplit({ transactionId, data, setData }) {
           </code>
         </>
       )}
-      <p className='bg-orange-300 p-2 mt-4'>
-        Add a <strong>new</strong> transactionId to restart the example
-      </p>
+      <div className='mt-4'>
+        <button className='bg-[#3eb55f] text-white px-4 py-1 font-semibold leading-6 text-sm' href='#' onClick={() => window.location.reload()}>
+          Restart example
+        </button>
+      </div>
     </>
   )
 }
