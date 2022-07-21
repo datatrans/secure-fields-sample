@@ -1,6 +1,10 @@
-# PocDatatransWidget
+# Angular 14 Datatrans Secure Fields Example 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.
+Example Project showing how to include and run the Secure Fields widget in Angular 14.
+
+Notes:
+- ScriptService: this is used to add the Secure Fields JS file into the Angular App from the URL - https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.js
+- DatatransWidgetComponent: this is the main component that contains the logic and UI for the widget, includes a call to the ScriptService in order to add the required JS file to the page.
 
 ## Development server
 
