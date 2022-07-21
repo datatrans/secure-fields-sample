@@ -1,6 +1,17 @@
 <div class="datatrans-widget-container">
-  <div class="card-number-container">
-    <div id="card-number"></div>
+  <div class="payment-container">
+    <div class="payment-field card-number-container">
+      <div id="card-number"></div>
+    </div>
+
+    <div class="payment-field expiry-container">
+      <input placeholder="MM/YY" type="text" (keyup)="expiryDateChange($event)" [(ngModel)]="expiry"/>
+    </div>
+
+    <div class="payment-field cvv-container">
+      <div class="secure-field--input" id="cvv-number"></div>
+    </div>
+
   </div>
 
   <button type="button" (click)="onSubmit()">
@@ -10,7 +21,9 @@
   <div>
     Card Type: {{ cardType }}
     <br>
-    Result: {{ result }}
+    Card Number Result: {{ cardNumberResult }}
+    <br>
+    CVV Result: {{ cvvResult }}
     <br>
     Transaction Id: {{ transactionId }}
   </div>

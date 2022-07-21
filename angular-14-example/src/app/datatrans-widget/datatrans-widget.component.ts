@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { ScriptService } from '../script.service';
 
 @Component({
@@ -6,17 +7,21 @@ import { ScriptService } from '../script.service';
   templateUrl: './datatrans-widget.component.html',
   styleUrls: ['./datatrans-widget.component.css']
 })
-export class DatatransWidgetComponent implements OnInit, OnDestroy {
+export class DatatransWidgetComponent implements OnInit {
   title = 'poc-datatrans-widget';
   constructor(private scriptService: ScriptService) {}
   secureFields: any;
   transactionId = '';
-  result = '';
+  cardNumberResult = '';
+  cvvResult = '';
+  expiryResult = '';
   cardType = '';
+  expiry = '';
+  expiryYear = '';
+  expiryMonth = '';
 
   ngOnInit(): void {
-    this.scriptService.load('secure-fields').then((data: any) => {
-      console.log('Loaded Script data:' + data.toString());
+    this.scriptService.load(environment.production ? 'secure-fields' : 'secure-fields-test').then((data: any) => {
       this.initSecureFields();
     }).catch(error => console.log(error));
   }
@@ -27,8 +32,12 @@ export class DatatransWidgetComponent implements OnInit, OnDestroy {
         '1100007006', // Merchant Id
         {
           cardNumber: {
-             placeholderElementId: 'card-number',
-             inputType: 'tel'
+            placeholderElementId: 'card-number',
+            inputType: 'tel'
+          },
+          cvv:  {
+            placeholderElementId: 'cvv-number',
+            inputType: 'tel'
           }
         },
         {
@@ -42,6 +51,7 @@ export class DatatransWidgetComponent implements OnInit, OnDestroy {
         this.secureFields.setStyle('cardNumber', 'height: 40px;');
         this.secureFields.focus('cardNumber');
         this.secureFields.setPlaceholder('cardNumber', '4242 4242 4242 4242');
+        this.secureFields.setPlaceholder("cvv", "123");
       });
 
       this.secureFields.on("success", (data: any) => {
@@ -51,7 +61,7 @@ export class DatatransWidgetComponent implements OnInit, OnDestroy {
       });
 
       this.secureFields.on('change', (data: any) => {
-        console.log('secureFields Changed');
+        // Fill epxiry date on card autocomplete
         if(!data.fields.cardNumber.paymentMethod) {
           this.cardType = 'Unknown';
         }
@@ -62,9 +72,15 @@ export class DatatransWidgetComponent implements OnInit, OnDestroy {
 
       this.secureFields.on('validate', (data: any) => {
         if (data.fields.cardNumber.valid) {
-          this.result = 'Valid';
+          this.cardNumberResult = 'Valid';
         } else {
-          this.result = 'Invalid';
+          this.cardNumberResult = 'Invalid';
+        }
+
+        if (data.fields.cvv.valid) {
+          this.cvvResult = 'Valid';
+        } else {
+          this.cvvResult = 'Invalid';
         }
       });
   }
@@ -73,7 +89,11 @@ export class DatatransWidgetComponent implements OnInit, OnDestroy {
     this.secureFields.submit();
   }
 
-  ngOnDestroy(): void {
-    this.secureFields.destroy();
+  expiryDateChange(event: any) {
+    let val = event.target.value as string;
+    if(val.length == 2)
+    {
+      this.expiry += '/';
+    }
   }
 }

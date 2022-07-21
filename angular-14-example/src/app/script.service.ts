@@ -7,7 +7,8 @@ interface Scripts {
 }
 
 export const ScriptStore: Scripts[] = [
-  { name: 'secure-fields', src: 'https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.js' }
+  { name: 'secure-fields', src: 'https://pay.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js' },
+  { name: 'secure-fields-test', src: 'https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js' }
 ];
 
 @Injectable({
