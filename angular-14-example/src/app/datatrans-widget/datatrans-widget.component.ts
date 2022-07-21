@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ScriptService } from '../script-service.service';
+import { ScriptService } from '../script.service';
 
 @Component({
   selector: 'app-datatrans-widget',
