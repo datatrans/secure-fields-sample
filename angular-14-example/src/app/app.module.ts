@@ -8,7 +8,7 @@ import { DatatransWidgetComponent } from './datatrans-widget/datatrans-widget.co
 @NgModule({
   declarations: [
     AppComponent,
-      DatatransWidgetComponent
+    DatatransWidgetComponent
    ],
   imports: [
     BrowserModule,

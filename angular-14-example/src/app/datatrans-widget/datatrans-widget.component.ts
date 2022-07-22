@@ -91,9 +91,9 @@ export class DatatransWidgetComponent implements OnInit {
 
   expiryDateChange(event: any) {
     let val = event.target.value as string;
-    if(val.length == 2)
-    {
+    if(val.length == 2 && event.key != "Backspace") {
       this.expiry += '/';
     }
   }
+
 }
