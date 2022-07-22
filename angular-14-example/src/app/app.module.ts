@@ -9,7 +9,7 @@ import { DatatransWidgetComponent } from './datatrans-widget/datatrans-widget.co
   declarations: [
     AppComponent,
     DatatransWidgetComponent
-   ],
+  ],
   imports: [
     BrowserModule,
     FormsModule
