@@ -1,0 +1,50 @@
+.payment-container {
+  border: 1px solid #c6c6cb;
+  display: flex;
+  color: #4a4a50;
+  background-color: #ffffff;
+  max-width: 280px;
+  margin-bottom: 10px;
+}
+
+.payment-container > div {
+  display: flex;
+}
+
+.payment-container > .payment-field {
+  height: 40px;
+  display: flex;
+}
+
+.card-number-container {
+  max-width: 155px;
+}
+
+.expiry-container {
+  max-width: 70px;
+}
+
+.expiry-container input {
+  max-width: 55px;
+  border: 0;
+  padding: 11px 10px 10px;
+}
+
+.expiry-container input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.cvv-container {
+  max-width: 35px;
+}
+
+button {
+  border: none;
+  background-color: #06bd6e;
+  color: white;
+  padding: 7px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
