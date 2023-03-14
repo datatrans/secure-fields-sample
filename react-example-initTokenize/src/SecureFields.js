@@ -10,7 +10,7 @@ const getUrl = (production) => production
   ? 'https://pay.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js'
   : 'https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js'
 
-const initalInputStyle = 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0'
+const initalInputStyle = 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0; outline: none'
 const initalCssClass = {
   'secure-field': true,
   'secure-field__input ': true,

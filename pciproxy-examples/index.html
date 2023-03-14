@@ -84,8 +84,8 @@
 
     secureFields.on('ready', function () {
       // Set styles manually as they're inside an iframe and out of the scope of the parent's stylesheets
-      secureFields.setStyle('cardNumber', 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0');
-      secureFields.setStyle('cvv','font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0');
+      secureFields.setStyle('cardNumber', 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0; outline: none');
+      secureFields.setStyle('cvv','font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0; outline: none');
       secureFields.focus('cardNumber');
     });
 
