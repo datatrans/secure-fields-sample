@@ -5,16 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>PCI Proxy Web Tokenization</title>
   <script src="https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js"></script>
+  <script src="../assets/js/expirationdate.js"></script>
   <link rel="stylesheet" type="text/css" href="../assets/css/stylesheet.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/inline.css">
 </head>
 <body style="margin: 0;">
   <nav style="text-align: center; background: #213d62; padding: 10px; margin-bottom: 40px;">
-    <a href="index.html">Basic Example</a>
-    <a style="text-decoration: underline;" href="inline-example.html">Inline Example</a>
-    <a href="floating-label.html">Floating Label Example</a>
-    <a href="iban.html">IBAN Example</a>
-    <a href="account.html">Account Number Example</a>
+    <a href="index.html">Basic</a>
+    <a style="text-decoration: underline;" href="inline-example.html">Inline</a>
+    <a href="floating-label.html">Floating Label</a>
+    <a href="iban.html">IBAN</a>
+    <a href="account.html">Account Number</a>
     <a href="show.html">Reveal Card (Show API)</a>
   </nav>
   <form style="max-width: 390px; margin: 0 auto;">
@@ -36,7 +37,7 @@
         </div>
       </div>
       <div>
-        <input id="expiry" name="expiry" placeholder="MM/YY" type="tel" maxlength="7" />
+        <input id="expiry" name="expiry" placeholder="MM/YY" type="tel" maxlength="7" autocomplete="off" />
       </div>
       <!-- CVV markup -->
       <div id="cvv-container" class="secure-field secure-field__input secure-field__base">
@@ -55,45 +56,6 @@
   <footer>
     <a href="https://github.com/datatrans/secure-fields-sample/blob/master/pciproxy-examples/inline-example.html">View this page on GitHub</a>
   </footer>
-  <script>
-    // Expiry date
-    function setInputFilter(textbox, inputFilter) {
-      ['input', 'keydown', 'keyup', 'mousedown', 'mouseup', 'select', 'contextmenu', 'drop'].forEach(function (key) {
-        textbox.addEventListener(key, function (e) {
-          if (/^\d+$/.test(e.key)) {
-            this.value = formatExpriy(this.value);
-          }
-
-          if (inputFilter(this.value)) {
-            this.oldValue = this.value;
-            this.oldSelectionStart = this.selectionStart;
-            this.oldSelectionEnd = this.selectionEnd;
-          } else if (this.hasOwnProperty('oldValue')) {
-            this.value = this.oldValue;
-            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-          } else {
-            this.value = '';
-          }
-          if (this.oldSelectionEnd === 7 && key === 'keyup' && e.key.match(/^[0-9]$/)) {
-            secureFields.focus('cvv');
-          }
-        });
-      });
-    }
-
-    setInputFilter(document.getElementById("expiry"), function(value) { return /^\d{0,2}[\/]?\d{0,2}/.test(value); });
-
-    function formatExpriy (val) {
-      var p1 = parseInt(val[0], 10),
-        p2 = parseInt(val[1], 10);
-
-      return /^\d$/.test(val) && "0" !== val && "1" !== val
-        ? "0" + val + " / "
-        : /^\d\d$/.test(val)
-          ? p2 > 2 && 0 !== p1 ? "0" + p1 + " / " + p2 : "" + val + " / "
-          : val
-    }
-  </script>
   <script>
     // Credit Card and CVV
     var secureFields = new SecureFields();
@@ -138,7 +100,7 @@
     });
 
     secureFields.on('change', function (data) {
-      // Fill epxiry date on card autocomplete
+      // Fill expiration date date on card autocomplete
       if (data.event.type === 'autocomplete') {
         if (data.event.field === 'expiryYear') {
           var value = (expiryInput.value || '/')
@@ -170,7 +132,7 @@
         cardImage.src = '../assets/img/brands/' + data.fields.cardNumber.paymentMethod + '.svg';
         cardContainer.classList.add('secure-field__is-recognized');
       }
-      if (data.event.type === 'keyUp' && data.event.field === 'cardNumber' && data.event.eventData.isNumber && data.fields.cardNumber.valid) {
+      if (data.event.type === 'keyUp' && data.event.field === 'cardNumber' && data.event.eventData && data.event.eventData.isNumber && data.fields.cardNumber.valid) {
         document.getElementById('expiry').focus();
       }
     })
@@ -196,12 +158,21 @@
     });
 
     document.getElementById('form-submit').addEventListener('click', function () {
-      // validate your expiry field here
-      if (document.getElementById('expiry').value !== '') {
-        secureFields.submit();
-      } else {
-        paymentContainer.classList.add('field__has-error');
+      // validate your expiration date field here
+      var result
+      try {
+        result = getExpirationDateObject(document.getElementById('expiry').value)
+      } catch {
+        // nothing to catch here
       }
+      if (result) {
+        secureFields.submit({
+          expm: result.expm,
+          expy: result.expy
+        });
+        return;
+      }
+      paymentContainer.classList.add('field__has-error');
     });
 
     secureFields.on('success', function (data) {
@@ -211,6 +182,8 @@
         result.style.display = 'block';
       }
     });
+
+    handleExpirationDate(document.getElementById("expiry"), "cvv");
   </script>
   <style>
     /* The following styles are NOT required */

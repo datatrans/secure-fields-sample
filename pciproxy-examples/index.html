@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>PCI Proxy Web Tokenization</title>
   <script src="https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js"></script>
+  <script src="../assets/js/expirationdate.js"></script>
   <link rel="stylesheet" type="text/css" href="../assets/css/stylesheet.css">
 </head>
 <body style="margin: 0;">
   <nav style="text-align: center; background: #213d62; padding: 10px; margin-bottom: 40px;">
-    <a style="text-decoration: underline;" href="index.html">Basic Example</a>
-    <a href="inline-example.html">Inline Example</a>
-    <a href="floating-label.html">Floating Label Example</a>
-    <a href="iban.html">IBAN Example</a>
-    <a href="account.html">Account Number Example</a>
+    <a style="text-decoration: underline;" href="index.html">Basic</a>
+    <a href="inline-example.html">Inline</a>
+    <a href="floating-label.html">Floating Label</a>
+    <a href="iban.html">IBAN</a>
+    <a href="account.html">Account Number</a>
     <a href="show.html">Reveal card (Show API)</a>
   </nav>
   <form style="max-width: 400px; margin: 0 auto;">
@@ -35,9 +36,23 @@
         </div>
       </div>
     </div>
-    <div style="max-width: 150px; margin-top: 20px">
+    <div style="margin-top: 20px; display: flex; flex-flow: row wrap; justify-content: space-between">
+      <!-- Expiry date -->
+      <div id="expiry-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon" style="max-width: 150px;">
+        <label for="expiry">Expiration Date</label>
+        <div class="secure-field--input-container" style="height: 40px">
+        <input id="expiry" type="tel" maxlength="7"  placeholder="MM / YY" class="secure-field--input" style="height: 40px; outline: none; font-size: 100%" autocomplete="off" />
+        <div class="secure-field--actions">
+          <span class="secure-field--action secure-field--action__card-icon">
+            <span class="secure-field--action-card-wrap">
+              <img class="secure-field--card-icon secure-field--card-icon__error" src="../assets/img/cvc-error.svg">
+            </span>
+          </span>
+        </div>
+      </div>
+      </div>
       <!-- CVV markup -->
-      <div id="cvv-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon">
+      <div id="cvv-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon" style="max-width: 150px;">
         <label for="cvv-number">CVV</label>
         <div class="secure-field--input-container" style="height: 40px">
           <div class="secure-field--input" id="cvv-number"></div>
@@ -91,6 +106,7 @@
 
     var cardContainer = document.getElementById('card-number-container');
     var cvvContainer = document.getElementById('cvv-container');
+    var expiryContainer = document.getElementById('expiry-container')
 
     // Set focus to input fields when clicking containers
     cardContainer.addEventListener('click', function () {
@@ -102,6 +118,21 @@
 
     // Set class names when fields change
     secureFields.on('change', function (data) {
+      // Fill expiration date date on card autocomplete
+      if (data.event.type === 'autocomplete') {
+        if (data.event.field === 'expiryYear') {
+          var value = (expiryInput.value || '/')
+          expiryInput.value = value.split('/')[0].trim() + ' / ' + data.event.value.slice(-2)
+          return
+        }
+
+        if (data.event.field === 'expiryMonth') {
+          var value = (expiryInput.value || '/')
+          expiryInput.value = data.event.value + ' / ' + value.split('/')[1].trim()
+          return
+        }
+      }
+
       var cardImage = cardContainer.querySelector('.secure-field--card-icon__recognized-card');
       cardContainer.classList.remove('secure-field__has-error');
       cvvContainer.classList.remove('secure-field__has-error');
@@ -132,7 +163,21 @@
     });
 
     document.getElementById('form-submit').addEventListener('click', function () {
-      secureFields.submit();
+      // validate your expiration date field here
+      var result
+      try {
+        result = getExpirationDateObject(document.getElementById('expiry').value)
+      } catch {
+        // nothing to catch here
+      }
+      if (result) {
+        secureFields.submit({
+          expm: result.expm,
+          expy: result.expy
+        });
+        return;
+      }
+      expiryContainer.classList.add('secure-field__has-error');
     });
 
     secureFields.on('success', function (data) {
@@ -142,6 +187,11 @@
         result.style.display = 'block';
       }
     });
+
+    document.getElementById("expiry").addEventListener('input', function () {
+      expiryContainer.classList.remove('secure-field__has-error');
+    });
+    handleExpirationDate(document.getElementById("expiry"), "cvv");
   </script>
   <style>
     /* The following styles are NOT required */
