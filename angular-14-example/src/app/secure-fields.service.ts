@@ -52,7 +52,7 @@ export class SecureFieldsService {
     });
 
     this.secureFields.on('change', (data: any) => {
-      // Fill epxiry date on card autocomplete
+      // Fill expiration date date on card autocomplete
       if(!data.fields.cardNumber.paymentMethod) {
         this.cardType = 'Unknown';
       }

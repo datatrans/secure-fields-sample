@@ -147,7 +147,7 @@ export function SecureFields({
           <Icon fieldType={fields.cvv.placeholderElementId} iconType={cvvIcon} />
         </Field>
         <div className='pb-2 pl-2'>
-          <label>Expiry Date</label>
+          <label>Expiration Date</label>
           <div className='flex items-end'>
             <input
               type='tel'
