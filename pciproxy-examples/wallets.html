@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>PCI Proxy Web Tokenization</title>
+  <script src="https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../assets/css/stylesheet.css">
+</head>
+<body style="margin: 0;">
+  <nav style="text-align: center; background: #213d62; padding: 10px; margin-bottom: 40px;">
+    <a href="index.html">Basic</a>
+    <a href="inline-example.html">Inline</a>
+    <a href="floating-label.html">Floating Label</a>
+    <a href="iban.html">IBAN</a>
+    <a href="account.html">Account Number</a>
+    <a style="text-decoration: underline;" href="wallets.html">Wallets</a>
+    <a href="show.html">Reveal Card (Show API)</a>
+  </nav>
+  <div style="width: 600px; margin: 0 auto;">
+    <strong>Execute the following code in your terminal:</strong>
+    <pre style="user-select: all">curl 'https://api.sandbox.datatrans.com/v1/transactions/secureFields/tokenize' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Basic MTEwMDAyNTgzNTozY29mTjNNeFhhQkg3VWw4' \
+  --data '{
+      "applePay": {
+          "merchantName": "Sample merchant",
+          "currency": "CHF",
+          "country": "CH"
+      },
+      "googlePay": {
+          "currency": "CHF"
+      }
+  }'</pre>
+    <strong>Provide the resulting transactionId:</strong>
+    <form style="margin: 20px 0">
+      <div>
+        <input type="text" placeholder="Transaction ID" name="transactionId" autocomplete="off" style="width: 250px"/>
+        <button type="button" onClick="initWalletButtons(document.querySelector('input[name=transactionId]').value)">Render buttons</button>
+      </div>
+    </form>
+    <div id="results-container" class="hidden">
+      <div style="display: flex; flex-flow: row wrap; justify-content: space-between; margin: 20px 0">
+        <div class="button-container"><span class="hint"><strong>Google Pay</strong> works in all browsers</span><div id="googlepay-container"></div></div>
+        <div class="button-container"><span class="hint"><strong>Apple Pay</strong> requires Safari 17</span><div id="applepay-container"></div></div>
+      </div>
+      <pre id="events"></pre>
+    </div>
+  </div>
+  <footer>
+    <a href="https://github.com/datatrans/secure-fields-sample/blob/master/pciproxy-examples/wallets.html">View this page on GitHub</a>
+  </footer>
+  <script>
+    var secureFields;
+
+    var eventContainer = document.getElementById('events');
+
+    function initWalletButtons(transactionId)  {
+      if (secureFields) {
+        secureFields.destroy();
+      } else {
+        document.getElementById('results-container').classList.remove('hidden');
+      }
+
+      secureFields = new SecureFields();
+
+      secureFields.init(transactionId, {
+        googlePay: "googlepay-container"
+      });
+
+      secureFields.init(transactionId, {
+        applePay: "applepay-container"
+      });
+
+      secureFields.on('error', function (data) {
+        try {
+          data = JSON.stringify(data)
+        } catch {}
+        if (data) {
+          eventContainer.innerText += 'Error: ' + data + '\n';
+        }
+      });
+
+      secureFields.on('success', function (data) {
+        try {
+          data = JSON.stringify(data)
+        } catch {}
+        if (data) {
+          eventContainer.innerText += 'Success: ' + data + '\n';
+        }
+      });
+
+      secureFields.on('ready', function () {
+        eventContainer.innerText += 'Ready: Secure Fields initialized\n';
+      });
+    }
+  </script>
+  <style>
+    /* The following styles are NOT required */
+    html, body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button {
+      border: none;
+      background-color: #06bd6e;
+      color: white;
+      padding: 7px 12px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    input {
+      display: inline-block;
+      padding: 7px 12px;
+      line-height: 1.3;
+      cursor: text;
+      border-style: solid;
+      border-width: 1px;
+      border-color: #e3e3e3;
+      border-radius: 0;
+    }
+
+    pre {
+      font-size: 85%;
+      background-color: #f2f2f2;
+      padding: 10px;
+    }
+
+    .button-container {
+      background-color: #f2f2f2;
+      flex-basis: 47.5%;
+      padding: 5px;
+    }
+
+    .button-container div {
+      margin-top: 5px;
+      height: 45px;
+      width: 100%;
+    }
+
+    .hint {
+      color: #999;
+      font-size: 85%;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</body>
