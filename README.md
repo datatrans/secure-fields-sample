@@ -3,7 +3,7 @@
 This project contains sample code for implementing a visually pleasing credit card form.
 
 Further information can be found here:
-- [As a PCI Proxy customer](https://docs.pci-proxy.com/collect/secure-fields-js)
+- [As a PCI Proxy customer](https://docs.pci-proxy.com/docs/secure-fields)
 - [As a Datatrans Payment Gateway customer](https://docs.datatrans.ch/docs/secure-fields)
 
 ## Online demo
