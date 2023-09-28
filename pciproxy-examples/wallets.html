@@ -42,7 +42,7 @@
     <form style="margin: 20px 0">
       <div>
         <input type="text" placeholder="Transaction ID" name="transactionId" autocomplete="off" style="width: 250px"/>
-        <button type="button" onClick="initWalletButtons(document.querySelector('input[name=transactionId]').value)">Render buttons</button>
+        <button type="button" onClick="initWalletButtons()">Render buttons</button>
       </div>
     </form>
     <div id="results-container" class="hidden">
@@ -50,18 +50,21 @@
         <div class="button-container"><span class="hint"><strong>Google Pay</strong> works in all browsers</span><div id="googlepay-container"></div></div>
         <div class="button-container"><span class="hint"><strong>Apple Pay</strong> requires Safari 17</span><div id="applepay-container"></div></div>
       </div>
-      <pre id="events"></pre>
     </div>
+    <pre id="events"></pre>
   </div>
   <footer>
     <a href="https://github.com/datatrans/secure-fields-sample/blob/master/pciproxy-examples/wallets.html">View this page on GitHub</a>
   </footer>
   <script>
+    var eventContainer = document.getElementById('events');
+    var transactionIdInput = document.querySelector('input[name=transactionId]');
+
     var secureFields;
 
-    var eventContainer = document.getElementById('events');
+    function initWalletButtons()  {
+      var transactionId = transactionIdInput.value;
 
-    function initWalletButtons(transactionId)  {
       if (secureFields) {
         secureFields.destroy();
       } else {
@@ -71,11 +74,8 @@
       secureFields = new SecureFields();
 
       secureFields.init(transactionId, {
-        googlePay: "googlepay-container"
-      });
-
-      secureFields.init(transactionId, {
-        applePay: "applepay-container"
+        googlePay: 'googlepay-container',
+        applePay: 'applepay-container'
       });
 
       secureFields.on('error', function (data) {
@@ -94,6 +94,10 @@
         if (data) {
           eventContainer.innerText += 'Success: ' + data + '\n';
         }
+
+        document.getElementById('results-container').classList.add('hidden');
+        transactionIdInput.value = '';
+        secureFields.destroy();
       });
 
       secureFields.on('ready', function () {
