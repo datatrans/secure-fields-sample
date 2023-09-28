@@ -71,11 +71,8 @@
       secureFields = new SecureFields();
 
       secureFields.init(transactionId, {
-        googlePay: "googlepay-container"
-      });
-
-      secureFields.init(transactionId, {
-        applePay: "applepay-container"
+        googlePay: 'googlepay-container',
+        applePay: 'applepay-container'
       });
 
       secureFields.on('error', function (data) {
