@@ -67,9 +67,8 @@
 
       if (secureFields) {
         secureFields.destroy();
-      } else {
-        document.getElementById('results-container').classList.remove('hidden');
       }
+      document.getElementById('results-container').classList.remove('hidden');
 
       secureFields = new SecureFields();
 
