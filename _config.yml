@@ -1,0 +1,2 @@
+# https://stackoverflow.com/questions/55880919/how-to-add-well-known-on-github-pages-files-using-html
+include: [".well-known"]
