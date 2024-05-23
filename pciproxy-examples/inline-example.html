@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -9,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/stylesheet.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/inline.css">
 </head>
+
 <body style="margin: 0;">
   <nav style="text-align: center; background: #213d62; padding: 10px; margin-bottom: 40px;">
     <a href="index.html">Basic</a>
@@ -22,15 +24,18 @@
   <form style="max-width: 390px; margin: 0 auto;">
     <div id="payment-container" class="inline-wrapper">
       <!-- Card Number markup -->
-      <div id="card-number-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-actions-left secure-field__has-card-icon">
+      <div id="card-number-container"
+        class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-actions-left secure-field__has-card-icon">
         <div class="secure-field--input-container" style="height: 40px">
           <div class="secure-field--actions">
             <span class="secure-field--action secure-field--action__card-icon">
               <span class="secure-field--action-card-wrap">
                 <img class="secure-field--card-icon secure-field--card-icon__empty" src="../assets/img/card-empty.svg">
                 <img class="secure-field--card-icon secure-field--card-icon__error" src="../assets/img/card-error.svg">
-                <img class="secure-field--card-icon secure-field--card-icon__recognized-card" src="../assets/img/card-recognized.svg">
-                <img class="secure-field--card-icon secure-field--cvv-icon secure-field--card-icon__empty" src="../assets/img/cvc-empty.svg">
+                <img class="secure-field--card-icon secure-field--card-icon__recognized-card"
+                  src="../assets/img/card-recognized.svg">
+                <img class="secure-field--card-icon secure-field--cvv-icon secure-field--card-icon__empty"
+                  src="../assets/img/cvc-empty.svg">
               </span>
             </span>
           </div>
@@ -38,7 +43,7 @@
         </div>
       </div>
       <div>
-        <input id="expiry" name="expiry" placeholder="MM/YY" type="tel" maxlength="7" autocomplete="off" />
+        <input id="expiry" name="expiry" placeholder="MM/YY" type="tel" maxlength="7" autocomplete="cc-exp" />
       </div>
       <!-- CVV markup -->
       <div id="cvv-container" class="secure-field secure-field__input secure-field__base">
@@ -55,7 +60,8 @@
     </div>
   </form>
   <footer>
-    <a href="https://github.com/datatrans/secure-fields-sample/blob/master/pciproxy-examples/inline-example.html">View this page on GitHub</a>
+    <a href="https://github.com/datatrans/secure-fields-sample/blob/master/pciproxy-examples/inline-example.html">View
+      this page on GitHub</a>
   </footer>
   <script>
     // Credit Card and CVV
@@ -65,12 +71,12 @@
       '1100007006',
       {
         cardNumber: {
-           placeholderElementId: 'card-number',
-           inputType: 'tel'
+          placeholderElementId: 'card-number',
+          inputType: 'tel'
         },
-        cvv:  {
-           placeholderElementId: 'cvv-number',
-           inputType: 'tel'
+        cvv: {
+          placeholderElementId: 'cvv-number',
+          inputType: 'tel'
         }
       },
       {
@@ -81,7 +87,7 @@
     secureFields.on('ready', function () {
       // Set styles manually as they're inside an iframe and out of the scope of the parent's stylesheets
       secureFields.setStyle('cardNumber', 'font: 16px/18px system-ui, sans-serif; border-radius: 0; border:0; -webkit-appearance: none; padding: 0; outline: none');
-      secureFields.setStyle('cvv','font: 16px/18px system-ui, sans-serif; border-radius: 0; border:0; -webkit-appearance: none; padding: 0; outline: none');
+      secureFields.setStyle('cvv', 'font: 16px/18px system-ui, sans-serif; border-radius: 0; border:0; -webkit-appearance: none; padding: 0; outline: none');
       secureFields.focus('cardNumber');
       secureFields.setPlaceholder("cardNumber", "4242 4242 4242 4242");
       secureFields.setPlaceholder("cvv", "123");
@@ -188,7 +194,8 @@
   </script>
   <style>
     /* The following styles are NOT required */
-    html, body {
+    html,
+    body {
       font-family: Arial, Helvetica, sans-serif;
     }
 
