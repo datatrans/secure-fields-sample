@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { ScriptService } from './script.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SecureFieldsService {
   transactionId: any;
@@ -11,13 +11,16 @@ export class SecureFieldsService {
   cardNumberResult: string | undefined;
   cvvResult: string | undefined;
 
-  constructor(private scriptService: ScriptService) { }
+  constructor(private scriptService: ScriptService) {}
   secureFields: any;
 
-  init(){
-    this.scriptService.load(environment.production ? 'secure-fields' : 'secure-fields-test').then((data: any) => {
-      this.initSecureFields();
-    }).catch(error => console.log(error));
+  init() {
+    this.scriptService
+      .load(environment.production ? 'secure-fields' : 'secure-fields-test')
+      .then((data: any) => {
+        this.initSecureFields();
+      })
+      .catch((error) => console.log(error));
   }
 
   initSecureFields() {
@@ -27,12 +30,12 @@ export class SecureFieldsService {
       {
         cardNumber: {
           placeholderElementId: 'card-number',
-          inputType: 'tel'
+          inputType: 'tel',
         },
-        cvv:  {
+        cvv: {
           placeholderElementId: 'cvv-number',
-          inputType: 'tel'
-        }
+          inputType: 'tel',
+        },
       }
     );
 
@@ -42,21 +45,20 @@ export class SecureFieldsService {
       this.secureFields.setStyle('cardNumber', 'height: 40px;');
       this.secureFields.focus('cardNumber');
       this.secureFields.setPlaceholder('cardNumber', '4242 4242 4242 4242');
-      this.secureFields.setPlaceholder("cvv", "123");
+      this.secureFields.setPlaceholder('cvv', '123');
     });
 
-    this.secureFields.on("success", (data: any) => {
-      if(data.transactionId) {
+    this.secureFields.on('success', (data: any) => {
+      if (data.transactionId) {
         this.transactionId = data.transactionId;
       }
     });
 
     this.secureFields.on('change', (data: any) => {
       // Fill expiration date date on card autocomplete
-      if(!data.fields.cardNumber.paymentMethod) {
+      if (!data.fields.cardNumber.paymentMethod) {
         this.cardType = 'Unknown';
-      }
-      else {
+      } else {
         this.cardType = data.fields.cardNumber.paymentMethod;
       }
     });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -8,6 +9,7 @@
   <script src="../assets/js/expirationdate.js"></script>
   <link rel="stylesheet" type="text/css" href="../assets/css/stylesheet.css">
 </head>
+
 <body style="margin: 0;">
   <nav style="text-align: center; background: #213d62; padding: 10px; margin-bottom: 40px;">
     <a style="text-decoration: underline;" href="index.html">Basic</a>
@@ -21,7 +23,8 @@
   <form style="max-width: 400px; margin: 0 auto;">
     <div style="max-width: 400px">
       <!-- Card Number markup -->
-      <div id="card-number-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon">
+      <div id="card-number-container"
+        class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon">
         <label for="card-number">Card Number</label>
         <div class="secure-field--input-container" style="height: 40px">
           <div class="secure-field--input" id="card-number"></div>
@@ -30,7 +33,8 @@
               <span class="secure-field--action-card-wrap">
                 <img class="secure-field--card-icon secure-field--card-icon__empty" src="../assets/img/card-empty.svg">
                 <img class="secure-field--card-icon secure-field--card-icon__error" src="../assets/img/card-error.svg">
-                <img class="secure-field--card-icon secure-field--card-icon__recognized-card" src="../assets/img/card-recognized.svg">
+                <img class="secure-field--card-icon secure-field--card-icon__recognized-card"
+                  src="../assets/img/card-recognized.svg">
               </span>
             </span>
           </div>
@@ -39,21 +43,26 @@
     </div>
     <div style="margin-top: 20px; display: flex; flex-flow: row wrap; justify-content: space-between">
       <!-- Expiry date -->
-      <div id="expiry-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon" style="max-width: 150px;">
+      <div id="expiry-container"
+        class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon"
+        style="max-width: 150px;">
         <label for="expiry">Expiration Date</label>
         <div class="secure-field--input-container" style="height: 40px">
-        <input id="expiry" type="tel" maxlength="7"  placeholder="MM / YY" class="secure-field--input" style="height: 40px; outline: none; font-size: 100%" autocomplete="off" />
-        <div class="secure-field--actions">
-          <span class="secure-field--action secure-field--action__card-icon">
-            <span class="secure-field--action-card-wrap">
-              <img class="secure-field--card-icon secure-field--card-icon__error" src="../assets/img/cvc-error.svg">
+          <input id="expiry" type="tel" maxlength="7" placeholder="MM / YY" class="secure-field--input"
+            style="height: 40px; outline: none; font-size: 100%" autocomplete="cc-exp" />
+          <div class="secure-field--actions">
+            <span class="secure-field--action secure-field--action__card-icon">
+              <span class="secure-field--action-card-wrap">
+                <img class="secure-field--card-icon secure-field--card-icon__error" src="../assets/img/cvc-error.svg">
+              </span>
             </span>
-          </span>
+          </div>
         </div>
       </div>
-      </div>
       <!-- CVV markup -->
-      <div id="cvv-container" class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon" style="max-width: 150px;">
+      <div id="cvv-container"
+        class="secure-field secure-field__input secure-field__base secure-field__has-actions secure-field__has-card-icon"
+        style="max-width: 150px;">
         <label for="cvv-number">CVV</label>
         <div class="secure-field--input-container" style="height: 40px">
           <div class="secure-field--input" id="cvv-number"></div>
@@ -76,7 +85,8 @@
     </div>
   </form>
   <footer>
-    <a href="https://github.com/datatrans/secure-fields-sample/blob/master/pciproxy-examples/index.html">View this page on GitHub</a>
+    <a href="https://github.com/datatrans/secure-fields-sample/blob/master/pciproxy-examples/index.html">View this page
+      on GitHub</a>
   </footer>
   <script>
     var secureFields = new SecureFields();
@@ -85,12 +95,12 @@
       '1100007006',
       {
         cardNumber: {
-           placeholderElementId: 'card-number',
-           inputType: 'tel'
+          placeholderElementId: 'card-number',
+          inputType: 'tel'
         },
-        cvv:  {
-           placeholderElementId: 'cvv-number',
-           inputType: 'tel'
+        cvv: {
+          placeholderElementId: 'cvv-number',
+          inputType: 'tel'
         }
       },
       {
@@ -101,13 +111,14 @@
     secureFields.on('ready', function () {
       // Set styles manually as they're inside an iframe and out of the scope of the parent's stylesheets
       secureFields.setStyle('cardNumber', 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0; outline: none');
-      secureFields.setStyle('cvv','font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0; outline: none');
+      secureFields.setStyle('cvv', 'font-size: 100%; border-radius: 0; -webkit-appearance: none; padding: 0; outline: none');
       secureFields.focus('cardNumber');
     });
 
     var cardContainer = document.getElementById('card-number-container');
     var cvvContainer = document.getElementById('cvv-container');
-    var expiryContainer = document.getElementById('expiry-container')
+    var expiryContainer = document.getElementById('expiry-container');
+    var expiryInput = document.getElementById('expiry');
 
     // Set focus to input fields when clicking containers
     cardContainer.addEventListener('click', function () {
@@ -196,7 +207,8 @@
   </script>
   <style>
     /* The following styles are NOT required */
-    html, body {
+    html,
+    body {
       font-family: Arial, Helvetica, sans-serif;
     }
 
