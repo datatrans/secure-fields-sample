@@ -1,19 +1,24 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
 import SecureFields from './SecureFields'
 
-ReactDOM.render(<SecureFields config={{
-  merchantID: '1100007006',
-  fields:{
-    cardNumber: {
-      placeholderElementId: 'card-number',
-      inputType: 'tel'
+const container = document.getElementById('app')
+const root = createRoot(container)
+
+root.render(
+  <SecureFields config={{
+    merchantID: '1100007006',
+    fields:{
+      cardNumber: {
+        placeholderElementId: 'card-number',
+        inputType: 'tel'
+      },
+      cvv: {
+        placeholderElementId: 'cvv-number',
+        inputType: 'tel'
+      }
     },
-    cvv: {
-      placeholderElementId: 'cvv-number',
-      inputType: 'tel'
-    }
-  },
-  options: {}
-}} />, document.getElementById('app'))
+    options: {}
+  }} />
+)

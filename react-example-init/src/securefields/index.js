@@ -20,8 +20,8 @@ export function SecureFields({
   onError
 }) {
   const [secureFields, setSecureFields] = useState()
-  const [expm, setExpm] = useState()
-  const [expy, setExpy] = useState()
+  const [expm, setExpm] = useState('')
+  const [expy, setExpy] = useState('')
   const [error, setError] = useState()
   const [cardIcon, setCardIcon] = useState('card-empty')
   const [cvvIcon, setCvvIcon] = useState('cvv-empty')
@@ -101,7 +101,6 @@ export function SecureFields({
       })
 
       secureFields.on('error', data => {
-        console.error(data)
         setError(data)
         onError(data)
         setIsLoading(false)
@@ -196,7 +195,11 @@ export function SecureFields({
         Submit
       </button>
 
-      {error && <p className='bg-red-400 p-2 mt-4 text-white'>{error}</p>}
+      {error && (
+        <p className='bg-red-400 p-2 mt-4 text-white'>
+          {typeof error === 'string' ? error : JSON.stringify(error)}
+        </p>
+      )}
     </form>
   )
 }
