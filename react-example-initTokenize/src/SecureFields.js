@@ -131,7 +131,7 @@ export default function SecureFields({ production, config }) {
         } else if (data.error) {
           message = (
             <pre className={'form-result ' + data.result} style={{marginTop: '20px', fontSize: '1rem'}}>
-              {data.error}
+              {typeof data.error === 'string' ? data.error : JSON.stringify(data.error)}
             </pre>
           )
         }
