@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "poc-datatrans-widget:build:production"
+              "buildTarget": "poc-datatrans-widget:build:production"
             },
             "development": {
-              "browserTarget": "poc-datatrans-widget:build:development"
+              "buildTarget": "poc-datatrans-widget:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "poc-datatrans-widget:build"
+            "buildTarget": "poc-datatrans-widget:build"
           }
         },
         "test": {

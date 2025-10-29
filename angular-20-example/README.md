@@ -1,6 +1,6 @@
-# Angular 14 Datatrans Secure Fields Example 
+# Angular 20 Datatrans Secure Fields Example
 
-Example Project showing how to include and run the Secure Fields widget in Angular 14.
+Example Project showing how to include and run the Secure Fields widget in Angular 20.
 
 Notes:
 - [ScriptService](src/app/script.service.ts): this is used to add the Secure Fields JS file into the Angular App from the URL - https://pay.sandbox.datatrans.com/upp/payment/js/secure-fields-2.0.0.js
