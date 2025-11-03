@@ -4,7 +4,8 @@ import { SecureFieldsService } from '../secure-fields.service';
 @Component({
   selector: 'app-datatrans-widget',
   templateUrl: './datatrans-widget.component.html',
-  styleUrls: ['./datatrans-widget.component.css']
+  styleUrls: ['./datatrans-widget.component.css'],
+  standalone: false
 })
 export class DatatransWidgetComponent implements OnInit, OnDestroy {
   title = 'datatrans-widget';

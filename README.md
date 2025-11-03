@@ -28,5 +28,5 @@ An example of how to integrate Secure Fields with React applications can be foun
 
 ### For PCI Proxy customers
 
-An example of how to integrate Secure Fields with Angular 14 applications can be found in the
-[angular-14-example](angular-14-example/) folder.
+An example of how to integrate Secure Fields with Angular 20 applications can be found in the
+[angular-20-example](angular-20-example/) folder.
