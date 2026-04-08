@@ -14,7 +14,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^4.1.17",
-    "vite": "^7.2.7"
+    "vite": "^7.3.2"
   },
   "dependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
