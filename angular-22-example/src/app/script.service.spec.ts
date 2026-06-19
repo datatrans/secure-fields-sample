@@ -1,5 +1,3 @@
-/* tslint:disable:no-unused-variable */
-
 import { ScriptService } from './script.service';
 
 describe('Service: ScriptService', () => {
