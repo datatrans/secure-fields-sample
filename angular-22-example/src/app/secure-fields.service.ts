@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { Injectable, signal } from '@angular/core';
+import { environment } from '../environments/environment';
 import { ScriptService } from './script.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SecureFieldsService {
-  transactionId: any;
-  cardType: string | undefined;
-  cardNumberResult: string | undefined;
-  cvvResult: string | undefined;
+  transactionId = signal<string | undefined>(undefined);
+  cardType = signal<string | undefined>(undefined);
+  cardNumberResult = signal<string | undefined>(undefined);
+  cvvResult = signal<string | undefined>(undefined);
 
   constructor(private scriptService: ScriptService) {}
   secureFields: any;
@@ -50,30 +50,30 @@ export class SecureFieldsService {
 
     this.secureFields.on('success', (data: any) => {
       if (data.transactionId) {
-        this.transactionId = data.transactionId;
+        this.transactionId.set(data.transactionId);
       }
     });
 
     this.secureFields.on('change', (data: any) => {
       // Fill expiration date date on card autocomplete
       if (!data.fields.cardNumber.paymentMethod) {
-        this.cardType = 'Unknown';
+        this.cardType.set('Unknown');
       } else {
-        this.cardType = data.fields.cardNumber.paymentMethod;
+        this.cardType.set(data.fields.cardNumber.paymentMethod);
       }
     });
 
     this.secureFields.on('validate', (data: any) => {
       if (data.fields.cardNumber.valid) {
-        this.cardNumberResult = 'Valid';
+        this.cardNumberResult.set('Valid');
       } else {
-        this.cardNumberResult = 'Invalid';
+        this.cardNumberResult.set('Invalid');
       }
 
       if (data.fields.cvv.valid) {
-        this.cvvResult = 'Valid';
+        this.cvvResult.set('Valid');
       } else {
-        this.cvvResult = 'Invalid';
+        this.cvvResult.set('Invalid');
       }
     });
   }
